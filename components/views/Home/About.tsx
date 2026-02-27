@@ -14,6 +14,12 @@ const About = () => {
   const p3Ref = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    const listeners: Array<{
+      el: Element;
+      event: string;
+      handler: EventListener;
+    }> = [];
+
     const ctx = gsap.context(() => {
       // Heading animation - simple fade and slide
       gsap.from(h2Ref.current, {
@@ -86,10 +92,25 @@ const About = () => {
 
         p.addEventListener("mouseenter", handleMouseEnter);
         p.addEventListener("mouseleave", handleMouseLeave);
+        listeners.push({
+          el: p,
+          event: "mouseenter",
+          handler: handleMouseEnter,
+        });
+        listeners.push({
+          el: p,
+          event: "mouseleave",
+          handler: handleMouseLeave,
+        });
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      listeners.forEach(({ el, event, handler }) =>
+        el.removeEventListener(event, handler),
+      );
+    };
   }, []);
 
   return (

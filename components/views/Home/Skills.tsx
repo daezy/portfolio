@@ -24,6 +24,12 @@ const Skills = () => {
   const otherSkillsHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
+    const listeners: Array<{
+      el: Element;
+      event: string;
+      handler: EventListener;
+    }> = [];
+
     const ctx = gsap.context(() => {
       // Header animations
       gsap.from(h2Ref.current, {
@@ -108,7 +114,11 @@ const Skills = () => {
       cards.forEach((card) => {
         if (!card) return;
 
-        card.addEventListener("mouseenter", () => {
+        const heading = card.querySelector("h3");
+        const text = card.querySelector("p");
+        const img = card.querySelector("img");
+
+        const handleEnter = () => {
           gsap.to(card, {
             scale: 1.02,
             y: -10,
@@ -116,35 +126,18 @@ const Skills = () => {
             duration: 0.4,
             ease: "power2.out",
           });
-
-          // Animate card content
-          const heading = card.querySelector("h3");
-          const text = card.querySelector("p");
-          const img = card.querySelector("img");
-
-          gsap.to(heading, {
-            x: 10,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-          gsap.to(text, {
-            x: 5,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-          if (img) {
+          gsap.to(heading, { x: 10, duration: 0.3, ease: "power2.out" });
+          gsap.to(text, { x: 5, duration: 0.3, ease: "power2.out" });
+          if (img)
             gsap.to(img, {
               scale: 1.1,
               rotation: 5,
               duration: 0.4,
               ease: "power2.out",
             });
-          }
-        });
+        };
 
-        card.addEventListener("mouseleave", () => {
+        const handleLeave = () => {
           gsap.to(card, {
             scale: 1,
             y: 0,
@@ -152,38 +145,20 @@ const Skills = () => {
             duration: 0.4,
             ease: "power2.out",
           });
-
-          const heading = card.querySelector("h3");
-          const text = card.querySelector("p");
-          const img = card.querySelector("img");
-
-          gsap.to([heading, text], {
-            x: 0,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-          if (img) {
+          gsap.to([heading, text], { x: 0, duration: 0.3, ease: "power2.out" });
+          if (img)
             gsap.to(img, {
               scale: 1,
               rotation: 0,
               duration: 0.4,
               ease: "power2.out",
             });
-          }
-        });
-      });
+        };
 
-      // Continuous floating animation for images
-      images?.forEach((img, index) => {
-        gsap.to(img, {
-          y: "+=15",
-          duration: 2 + index * 0.5,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: index * 0.2,
-        });
+        card.addEventListener("mouseenter", handleEnter);
+        card.addEventListener("mouseleave", handleLeave);
+        listeners.push({ el: card, event: "mouseenter", handler: handleEnter });
+        listeners.push({ el: card, event: "mouseleave", handler: handleLeave });
       });
 
       // Animate "Other skills include" heading
@@ -219,7 +194,9 @@ const Skills = () => {
 
         // Hover animations for small cards
         smallCards.forEach((card) => {
-          card.addEventListener("mouseenter", () => {
+          const star = card.querySelector("img");
+
+          const handleEnter = () => {
             gsap.to(card, {
               y: -5,
               scale: 1.05,
@@ -227,19 +204,16 @@ const Skills = () => {
               duration: 0.3,
               ease: "power2.out",
             });
-
-            const star = card.querySelector("img");
-            if (star) {
+            if (star)
               gsap.to(star, {
                 rotation: 360,
                 scale: 1.2,
                 duration: 0.5,
                 ease: "back.out(1.7)",
               });
-            }
-          });
+          };
 
-          card.addEventListener("mouseleave", () => {
+          const handleLeave = () => {
             gsap.to(card, {
               y: 0,
               scale: 1,
@@ -247,16 +221,26 @@ const Skills = () => {
               duration: 0.3,
               ease: "power2.out",
             });
-
-            const star = card.querySelector("img");
-            if (star) {
+            if (star)
               gsap.to(star, {
                 rotation: 0,
                 scale: 1,
                 duration: 0.5,
                 ease: "power2.out",
               });
-            }
+          };
+
+          card.addEventListener("mouseenter", handleEnter);
+          card.addEventListener("mouseleave", handleLeave);
+          listeners.push({
+            el: card,
+            event: "mouseenter",
+            handler: handleEnter,
+          });
+          listeners.push({
+            el: card,
+            event: "mouseleave",
+            handler: handleLeave,
           });
         });
 
@@ -276,7 +260,12 @@ const Skills = () => {
       }
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      listeners.forEach(({ el, event, handler }) =>
+        el.removeEventListener(event, handler),
+      );
+    };
   }, []);
 
   return (

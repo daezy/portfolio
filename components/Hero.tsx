@@ -13,14 +13,22 @@ const Hero = () => {
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const listeners: Array<{
+      el: Element;
+      event: string;
+      handler: EventListener;
+    }> = [];
+
     const ctx = gsap.context(() => {
-      // Initial state
-      gsap.set(
-        [h1Ref.current, pRef.current, btnGroupRef.current, imageRef.current],
-        {
-          opacity: 0,
-        }
-      );
+      // Initial state - GSAP owns all transforms to avoid inline style conflicts
+      gsap.set([h1Ref.current, pRef.current, btnGroupRef.current], {
+        opacity: 0,
+        y: 50,
+      });
+      gsap.set(imageRef.current, {
+        opacity: 0,
+        scale: 0.8,
+      });
 
       // Create timeline for hero entrance
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -38,7 +46,7 @@ const Hero = () => {
             y: 0,
             duration: 1,
           },
-          "-=0.8"
+          "-=0.8",
         )
         .to(
           btnGroupRef.current,
@@ -47,7 +55,7 @@ const Hero = () => {
             y: 0,
             duration: 0.8,
           },
-          "-=0.6"
+          "-=0.6",
         )
         .to(
           imageRef.current,
@@ -57,7 +65,7 @@ const Hero = () => {
             duration: 1.2,
             ease: "elastic.out(1, 0.5)",
           },
-          "-=1"
+          "-=1",
         );
 
       // Floating animation for image
@@ -72,50 +80,50 @@ const Hero = () => {
       // Button hover animations
       const buttons = btnGroupRef.current?.querySelectorAll("button");
       buttons?.forEach((button) => {
-        button.addEventListener("mouseenter", () => {
-          gsap.to(button, {
-            scale: 1.05,
-            duration: 0.3,
-            ease: "power2.out",
-          });
+        const handleEnter = () => {
+          gsap.to(button, { scale: 1.05, duration: 0.3, ease: "power2.out" });
+        };
+        const handleLeave = () => {
+          gsap.to(button, { scale: 1, duration: 0.3, ease: "power2.out" });
+        };
+        button.addEventListener("mouseenter", handleEnter);
+        button.addEventListener("mouseleave", handleLeave);
+        listeners.push({
+          el: button,
+          event: "mouseenter",
+          handler: handleEnter,
         });
-        button.addEventListener("mouseleave", () => {
-          gsap.to(button, {
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out",
-          });
+        listeners.push({
+          el: button,
+          event: "mouseleave",
+          handler: handleLeave,
         });
       });
     }, heroRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      listeners.forEach(({ el, event, handler }) =>
+        el.removeEventListener(event, handler),
+      );
+    };
   }, []);
 
   return (
     <header ref={heroRef} className="hero-image flex items-center relative">
       <div className="hero-content max-w-[1280px] mx-auto w-full py-32 flex items-center justify-between gap-20 px-5">
         <div className="">
-          <h1
-            ref={h1Ref}
-            className="font-bold text-[64px] leading-[63px] mb-5"
-            style={{ opacity: 0, transform: "translateY(50px)" }}
-          >
+          <h1 ref={h1Ref} className="font-bold text-[64px] leading-[63px] mb-5">
             Hey, I&apos;m Daniel <br /> Ezet Onoriode
           </h1>
           <p
             ref={pRef}
             className="text-[#C5C8D3] text-[20px] font-normal tracking-wide"
-            style={{ opacity: 0, transform: "translateY(30px)" }}
           >
             Software Engineer with 5+ years of experience. Turning <br />
             Ideas into Powerful Digital Experiences.
           </p>
-          <div
-            ref={btnGroupRef}
-            className="btn-group flex gap-3 mt-5"
-            style={{ opacity: 0, transform: "translateY(20px)" }}
-          >
+          <div ref={btnGroupRef} className="btn-group flex gap-3 mt-5">
             <button className="bg-[#1C66C2] border border-[#FFFFFF33] text-white px-9 py-4 rounded-full hover:bg-[#1C66C2] transition text-[14px] font-semibold">
               View Resume
             </button>
@@ -124,11 +132,7 @@ const Hero = () => {
             </button>
           </div>
         </div>
-        <div
-          ref={imageRef}
-          className="img-hero"
-          style={{ opacity: 0, transform: "scale(0.8)" }}
-        >
+        <div ref={imageRef} className="img-hero">
           <Image src={Me} alt="me" className="rounded-full" />
         </div>
 

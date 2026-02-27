@@ -62,35 +62,139 @@ const experienceData: ExperienceItem[] = [
 
 const Experience = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const h2Ref = useRef<HTMLHeadingElement>(null);
+  const pRef = useRef<HTMLParagraphElement>(null);
+  const card1Ref = useRef<HTMLDivElement>(null);
+  const card2Ref = useRef<HTMLDivElement>(null);
+  const card3Ref = useRef<HTMLDivElement>(null);
+  const cardRefs = [card1Ref, card2Ref, card3Ref];
   const [expandedId, setExpandedId] = useState<number | null>(1);
 
   const toggleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  useEffect(() => {
+    const listeners: Array<{
+      el: Element;
+      event: string;
+      handler: EventListener;
+    }> = [];
+
+    const ctx = gsap.context(() => {
+      // Heading slides in from the left
+      gsap.from(h2Ref.current, {
+        scrollTrigger: {
+          trigger: h2Ref.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 0,
+        x: -100,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      // Subtitle fades up
+      gsap.from(pRef.current, {
+        scrollTrigger: {
+          trigger: pRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out",
+      });
+
+      // Each card gets its own ScrollTrigger with a delay for stagger effect
+      const cards = [card1Ref.current, card2Ref.current, card3Ref.current];
+
+      cards.forEach((card, index) => {
+        if (!card) return;
+
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 60,
+          duration: 0.8,
+          delay: index * 0.15,
+          ease: "power2.out",
+        });
+
+        // Hover lift
+        const handleMouseEnter = () => {
+          gsap.to(card, {
+            y: -6,
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        };
+
+        const handleMouseLeave = () => {
+          gsap.to(card, {
+            y: 0,
+            boxShadow: "none",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        };
+
+        card.addEventListener("mouseenter", handleMouseEnter);
+        card.addEventListener("mouseleave", handleMouseLeave);
+        listeners.push({
+          el: card,
+          event: "mouseenter",
+          handler: handleMouseEnter,
+        });
+        listeners.push({
+          el: card,
+          event: "mouseleave",
+          handler: handleMouseLeave,
+        });
+      });
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      listeners.forEach(({ el, event, handler }) =>
+        el.removeEventListener(event, handler),
+      );
+    };
+  }, []);
+
   return (
     <div ref={sectionRef}>
       <Container>
-        <h2 className="text-white font-bold text-[48px] mb-3">Experience</h2>
-        <p className="text-gray-400 text-lg mb-12">
+        <h2 ref={h2Ref} className="text-white font-bold text-[48px] mb-3">
+          Experience
+        </h2>
+        <p ref={pRef} className="text-[#C5C8D3] text-lg mb-7">
           A look at where I&apos;ve worked, what I&apos;ve built, and how
           I&apos;ve grown along the way.
         </p>
 
         <div className="space-y-6">
-          {experienceData.map((exp) => (
+          {experienceData.map((exp, index) => (
             <div
               key={exp.id}
-              className="bg-[#1a1a1a] rounded-lg overflow-hidden transition-all duration-300"
+              ref={cardRefs[index]}
+              className="bg-[#1a1a1a] rounded-3xl overflow-hidden transition-all duration-300"
             >
               <button
                 onClick={() => toggleExpand(exp.id)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-[#222] transition-colors"
+                className="w-full px-8 py-5 flex items-center justify-between text-left hover:bg-[#222] transition-colors"
               >
                 <div className="flex-1">
-                  <h3 className="text-white text-2xl font-medium mb-2">
+                  <h3 className="text-white text-[20px] font-medium mb-2">
                     {exp.title} -{" "}
-                    <span className="text-[#4A9EFF]">{exp.company}</span>
+                    <span className="text-[#338FFF]">{exp.company}</span>
                   </h3>
                 </div>
                 <svg
@@ -118,7 +222,7 @@ const Experience = () => {
                 }`}
               >
                 <div className="px-8 pb-6">
-                  <div className="flex items-center gap-4 mb-6 text-gray-400 italic">
+                  <div className="flex items-center gap-4 mb-6 text-[#C5C8D3] italic text-[14px]">
                     <span>{exp.period}</span>
                     <div className="flex items-center gap-2">
                       <svg
@@ -140,7 +244,7 @@ const Experience = () => {
                     {exp.responsibilities.map((responsibility, index) => (
                       <li
                         key={index}
-                        className="text-gray-300 flex items-start gap-3"
+                        className="text-[#C5C8D3] flex items-start gap-3 text-[16px]"
                       >
                         <span className="text-gray-500 mt-1">•</span>
                         <span>{responsibility}</span>

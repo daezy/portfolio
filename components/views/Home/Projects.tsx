@@ -22,6 +22,12 @@ const Projects = () => {
   const card4Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const listeners: Array<{
+      el: Element;
+      event: string;
+      handler: EventListener;
+    }> = [];
+
     const ctx = gsap.context(() => {
       // Header animations
       gsap.from(h2Ref.current, {
@@ -149,10 +155,25 @@ const Projects = () => {
 
         card.addEventListener("mouseenter", handleMouseEnter);
         card.addEventListener("mouseleave", handleMouseLeave);
+        listeners.push({
+          el: card,
+          event: "mouseenter",
+          handler: handleMouseEnter,
+        });
+        listeners.push({
+          el: card,
+          event: "mouseleave",
+          handler: handleMouseLeave,
+        });
       });
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      listeners.forEach(({ el, event, handler }) =>
+        el.removeEventListener(event, handler),
+      );
+    };
   }, []);
 
   return (
