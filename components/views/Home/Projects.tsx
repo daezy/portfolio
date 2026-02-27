@@ -162,8 +162,8 @@ const Projects = () => {
           Projects
         </h2>
         <p ref={pRef}>
-          Here are some things I've built — from passion projects to real-world
-          apps — that showcase how I think, code, and solve problems.
+          Here are some things I&apos;ve built — from passion projects to
+          real-world apps — that showcase how I think, code, and solve problems.
         </p>
 
         <div className="grid grid-cols-2 gap-6 mt-8 mb-5">

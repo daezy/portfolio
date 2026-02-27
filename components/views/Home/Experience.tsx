@@ -34,7 +34,7 @@ const experienceData: ExperienceItem[] = [
   },
   {
     id: 2,
-    title: "Full-Stack Developer (MERN Stack)",
+    title: "Full-Stack Developer",
     company: "Freelance",
     period: "Jul 2021 - Sep 2023",
     location: "Remote",
@@ -47,7 +47,7 @@ const experienceData: ExperienceItem[] = [
   },
   {
     id: 3,
-    title: "Junior Full-Stack Developer (MERN Stack)",
+    title: "Junior Full-Stack Developer",
     company: "Dives Investments",
     period: "Jan 2021 - Jun 2021",
     location: "Remote",
