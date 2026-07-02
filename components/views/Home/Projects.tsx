@@ -6,6 +6,7 @@ import Project2 from "@/public/images/projects/2.png";
 import Project3 from "@/public/images/projects/3.png";
 import Project4 from "@/public/images/projects/4.png";
 import Image from "next/image";
+import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BsCaretRight } from "react-icons/bs";
@@ -28,158 +29,130 @@ const Projects = () => {
       handler: EventListener;
     }> = [];
 
-    const ctx = gsap.context(() => {
-      // Header animations
-      gsap.from(h2Ref.current, {
-        scrollTrigger: {
-          trigger: h2Ref.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        x: -100,
-        duration: 1,
-        ease: "power3.out",
-      });
+    const mm = gsap.matchMedia();
 
-      gsap.from(pRef.current, {
-        scrollTrigger: {
-          trigger: pRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: "power2.out",
-      });
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        gsap.from(h2Ref.current, {
+          scrollTrigger: {
+            trigger: h2Ref.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          x: -100,
+          duration: 1,
+          ease: "power3.out",
+        });
 
-      // Project card animations with stagger
-      const cards = [
-        card1Ref.current,
-        card2Ref.current,
-        card3Ref.current,
-        card4Ref.current,
-      ];
+        gsap.from(pRef.current, {
+          scrollTrigger: {
+            trigger: pRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: "power2.out",
+        });
 
-      gsap.from(cards, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 60%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        y: 80,
-        scale: 0.95,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: "power2.out",
-      });
+        const cards = [
+          card1Ref.current,
+          card2Ref.current,
+          card3Ref.current,
+          card4Ref.current,
+        ];
 
-      // Card hover animations
-      cards.forEach((card) => {
-        if (!card) return;
+        gsap.from(cards, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 60%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 80,
+          scale: 0.95,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: "power2.out",
+        });
 
-        const image = card.querySelector(".project-image");
-        const button = card.querySelector("button");
+        cards.forEach((card) => {
+          if (!card) return;
+          const image = card.querySelector(".project-image");
+          const button = card.querySelector("button");
 
-        const handleMouseEnter = () => {
-          gsap.to(card, {
-            y: -8,
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-          if (image) {
-            gsap.to(image, {
-              scale: 1.05,
+          const handleMouseEnter = () => {
+            gsap.to(card, {
+              y: -8,
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
               duration: 0.3,
               ease: "power2.out",
             });
-          }
-
-          if (button) {
-            gsap.to(button, {
-              x: 5,
-              backgroundColor: "#1C66C2",
-              duration: 0.3,
-              ease: "power2.out",
-            });
-
-            const icon = button.querySelector("svg");
-            if (icon) {
-              gsap.to(icon, {
+            if (image) {
+              gsap.to(image, { scale: 1.05, duration: 0.3, ease: "power2.out" });
+            }
+            if (button) {
+              gsap.to(button, {
                 x: 5,
+                backgroundColor: "#1C66C2",
                 duration: 0.3,
                 ease: "power2.out",
               });
+              const icon = button.querySelector("svg");
+              if (icon) {
+                gsap.to(icon, { x: 5, duration: 0.3, ease: "power2.out" });
+              }
             }
-          }
-        };
+          };
 
-        const handleMouseLeave = () => {
-          gsap.to(card, {
-            y: 0,
-            boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-
-          if (image) {
-            gsap.to(image, {
-              scale: 1,
+          const handleMouseLeave = () => {
+            gsap.to(card, {
+              y: 0,
+              boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
               duration: 0.3,
               ease: "power2.out",
             });
-          }
-
-          if (button) {
-            gsap.to(button, {
-              x: 0,
-              backgroundColor: "#27292B",
-              duration: 0.3,
-              ease: "power2.out",
-            });
-
-            const icon = button.querySelector("svg");
-            if (icon) {
-              gsap.to(icon, {
+            if (image) {
+              gsap.to(image, { scale: 1, duration: 0.3, ease: "power2.out" });
+            }
+            if (button) {
+              gsap.to(button, {
                 x: 0,
+                backgroundColor: "#27292B",
                 duration: 0.3,
                 ease: "power2.out",
               });
+              const icon = button.querySelector("svg");
+              if (icon) {
+                gsap.to(icon, { x: 0, duration: 0.3, ease: "power2.out" });
+              }
             }
-          }
-        };
+          };
 
-        card.addEventListener("mouseenter", handleMouseEnter);
-        card.addEventListener("mouseleave", handleMouseLeave);
-        listeners.push({
-          el: card,
-          event: "mouseenter",
-          handler: handleMouseEnter,
+          card.addEventListener("mouseenter", handleMouseEnter);
+          card.addEventListener("mouseleave", handleMouseLeave);
+          listeners.push({ el: card, event: "mouseenter", handler: handleMouseEnter });
+          listeners.push({ el: card, event: "mouseleave", handler: handleMouseLeave });
         });
-        listeners.push({
-          el: card,
-          event: "mouseleave",
-          handler: handleMouseLeave,
-        });
-      });
-    }, sectionRef);
+      }, sectionRef);
 
-    return () => {
-      ctx.revert();
-      listeners.forEach(({ el, event, handler }) =>
-        el.removeEventListener(event, handler),
-      );
-    };
+      return () => {
+        ctx.revert();
+        listeners.forEach(({ el, event, handler }) =>
+          el.removeEventListener(event, handler),
+        );
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
     <div ref={sectionRef}>
       <Container>
-        <h2 ref={h2Ref} className="text-white font-bold text-[48px] mb-3">
+        <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           Projects
         </h2>
         <p ref={pRef}>
@@ -187,7 +160,7 @@ const Projects = () => {
           real-world apps — that showcase how I think, code, and solve problems.
         </p>
 
-        <div className="grid grid-cols-2 gap-6 mt-8 mb-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-5">
           <div
             ref={card1Ref}
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
@@ -196,20 +169,21 @@ const Projects = () => {
               <Image src={Project1} alt="Project 1" className="w-full" />
             </div>
             <div>
-              <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
+              <h3 className="text-white font-bold text-h3 mb-4">
                 TaskPilot – Productivity Task Manager
               </h3>
-              <p className="text-[#C5C8D3] text-[15px] leading-6">
+              <p className="text-[#C5C8D3] text-base leading-7">
                 A Kanban-style productivity app with drag-and-drop features,
                 real-time collaboration using WebSockets, and user
                 authentication via JWT.
               </p>
-
-              <button className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-[14px] font-semibold flex items-center gap-2">
+              <button
+                type="button"
+                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
+              >
                 View Project <BsCaretRight />
               </button>
             </div>
-            <div className="mt-6 absolute bottom-0 left-0"></div>
           </div>
 
           <div
@@ -217,23 +191,24 @@ const Projects = () => {
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
             <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project2} alt="Project 1" className="w-full" />
+              <Image src={Project2} alt="DevDeck portfolio builder" className="w-full" />
             </div>
             <div>
-              <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
+              <h3 className="text-white font-bold text-h3 mb-4">
                 DevDeck – Developer Portfolio Builder
               </h3>
-              <p className="text-[#C5C8D3] text-[15px] leading-6">
+              <p className="text-[#C5C8D3] text-base leading-7">
                 Create and deploy fully customizable portfolio websites without
                 writing a single line of code — designers, and creatives who
                 want a professional online presence with ease.
               </p>
-
-              <button className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-[14px] font-semibold flex items-center gap-2">
+              <button
+                type="button"
+                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
+              >
                 View Project <BsCaretRight />
               </button>
             </div>
-            <div className="mt-6 absolute bottom-0 left-0"></div>
           </div>
 
           <div
@@ -241,23 +216,24 @@ const Projects = () => {
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
             <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project3} alt="Project 1" className="w-full" />
+              <Image src={Project3} alt="BugSquash issue tracker" className="w-full" />
             </div>
             <div>
-              <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
+              <h3 className="text-white font-bold text-h3 mb-4">
                 BugSquash – Lightweight Issue Tracker
               </h3>
-              <p className="text-[#C5C8D3] text-[15px] leading-6">
+              <p className="text-[#C5C8D3] text-base leading-7">
                 A simplified bug and issue tracking system designed for solo
                 devs or small teams. Features task management, tagging,
                 filtering, and real-time updates for streamlined workflows.
               </p>
-
-              <button className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-[14px] font-semibold flex items-center gap-2">
+              <button
+                type="button"
+                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
+              >
                 View Project <BsCaretRight />
               </button>
             </div>
-            <div className="mt-6 absolute bottom-0 left-0"></div>
           </div>
 
           <div
@@ -265,25 +241,35 @@ const Projects = () => {
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
             <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project4} alt="Project 1" className="w-full" />
+              <Image src={Project4} alt="HabitForge habit tracker" className="w-full" />
             </div>
             <div>
-              <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
+              <h3 className="text-white font-bold text-h3 mb-4">
                 HabitForge – Habit Tracker
               </h3>
-              <p className="text-[#C5C8D3] text-[15px] leading-6">
+              <p className="text-[#C5C8D3] text-base leading-7">
                 A personal habit tracker that helps users build routines and
                 track progress with visual stats. Set daily goals, monitor
                 streaks, and stay accountable with a clean, interactive
                 dashboard.
               </p>
-
-              <button className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-[14px] font-semibold flex items-center gap-2">
+              <button
+                type="button"
+                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
+              >
                 View Project <BsCaretRight />
               </button>
             </div>
-            <div className="mt-6 absolute bottom-0 left-0"></div>
           </div>
+        </div>
+
+        <div className="flex justify-center">
+          <Link
+            href="/projects"
+            className="bg-transparent border border-[#1C66C2] text-[#1C66C2] px-9 py-4 rounded-full hover:bg-[#1C66C2] hover:text-white transition text-sm font-semibold flex items-center gap-2"
+          >
+            View All Projects <BsCaretRight />
+          </Link>
         </div>
       </Container>
     </div>

@@ -52,7 +52,7 @@ const experienceData: ExperienceItem[] = [
     period: "Jan 2021 - Jun 2021",
     location: "Remote",
     responsibilities: [
-      "Developed and maintained the company’s investment web platform using the MERN stack",
+      "Developed and maintained the company's investment web platform using the MERN stack",
       "Built user onboarding, coupons management, investment tracking, and ROI calculation features",
       "Created internal admin tools for managing users and transactions",
       "Fixed production issues and supported ongoing feature updates",
@@ -81,98 +81,92 @@ const Experience = () => {
       handler: EventListener;
     }> = [];
 
-    const ctx = gsap.context(() => {
-      // Heading slides in from the left
-      gsap.from(h2Ref.current, {
-        scrollTrigger: {
-          trigger: h2Ref.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        x: -100,
-        duration: 1,
-        ease: "power3.out",
-      });
+    const mm = gsap.matchMedia();
 
-      // Subtitle fades up
-      gsap.from(pRef.current, {
-        scrollTrigger: {
-          trigger: pRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-
-      // Each card gets its own ScrollTrigger with a delay for stagger effect
-      const cards = [card1Ref.current, card2Ref.current, card3Ref.current];
-
-      cards.forEach((card, index) => {
-        if (!card) return;
-
-        gsap.from(card, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        gsap.from(h2Ref.current, {
           scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
+            trigger: h2Ref.current,
+            start: "top 80%",
             toggleActions: "play none none reverse",
           },
           opacity: 0,
-          y: 60,
+          x: -100,
+          duration: 1,
+          ease: "power3.out",
+        });
+
+        gsap.from(pRef.current, {
+          scrollTrigger: {
+            trigger: pRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 30,
           duration: 0.8,
-          delay: index * 0.15,
           ease: "power2.out",
         });
 
-        // Hover lift
-        const handleMouseEnter = () => {
-          gsap.to(card, {
-            y: -6,
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
-            duration: 0.3,
+        const cards = [card1Ref.current, card2Ref.current, card3Ref.current];
+
+        cards.forEach((card, index) => {
+          if (!card) return;
+
+          gsap.from(card, {
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            opacity: 0,
+            y: 60,
+            duration: 0.8,
+            delay: index * 0.15,
             ease: "power2.out",
           });
-        };
 
-        const handleMouseLeave = () => {
-          gsap.to(card, {
-            y: 0,
-            boxShadow: "none",
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        };
+          const handleMouseEnter = () => {
+            gsap.to(card, {
+              y: -6,
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          };
 
-        card.addEventListener("mouseenter", handleMouseEnter);
-        card.addEventListener("mouseleave", handleMouseLeave);
-        listeners.push({
-          el: card,
-          event: "mouseenter",
-          handler: handleMouseEnter,
+          const handleMouseLeave = () => {
+            gsap.to(card, {
+              y: 0,
+              boxShadow: "none",
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          };
+
+          card.addEventListener("mouseenter", handleMouseEnter);
+          card.addEventListener("mouseleave", handleMouseLeave);
+          listeners.push({ el: card, event: "mouseenter", handler: handleMouseEnter });
+          listeners.push({ el: card, event: "mouseleave", handler: handleMouseLeave });
         });
-        listeners.push({
-          el: card,
-          event: "mouseleave",
-          handler: handleMouseLeave,
-        });
-      });
-    }, sectionRef);
+      }, sectionRef);
 
-    return () => {
-      ctx.revert();
-      listeners.forEach(({ el, event, handler }) =>
-        el.removeEventListener(event, handler),
-      );
-    };
+      return () => {
+        ctx.revert();
+        listeners.forEach(({ el, event, handler }) =>
+          el.removeEventListener(event, handler),
+        );
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
     <div ref={sectionRef}>
       <Container>
-        <h2 ref={h2Ref} className="text-white font-bold text-[48px] mb-3">
+        <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           Experience
         </h2>
         <p ref={pRef} className="text-[#C5C8D3] text-lg mb-7">
@@ -188,12 +182,14 @@ const Experience = () => {
               className="bg-[#1a1a1a] rounded-3xl overflow-hidden transition-all duration-300"
             >
               <button
+                type="button"
                 onClick={() => toggleExpand(exp.id)}
-                className="w-full px-8 py-5 flex items-center justify-between text-left hover:bg-[#222] transition-colors"
+                className="w-full px-5 sm:px-8 py-4 sm:py-5 flex items-center justify-between text-left hover:bg-[#222] transition-colors"
+                aria-expanded={expandedId === exp.id}
               >
                 <div className="flex-1">
-                  <h3 className="text-white text-[20px] font-medium mb-2">
-                    {exp.title} -{" "}
+                  <h3 className="text-white text-base sm:text-lg md:text-xl font-medium mb-2">
+                    {exp.title} —{" "}
                     <span className="text-[#338FFF]">{exp.company}</span>
                   </h3>
                 </div>
@@ -204,6 +200,7 @@ const Experience = () => {
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -217,18 +214,19 @@ const Experience = () => {
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   expandedId === exp.id
-                    ? "max-h-[500px] opacity-100"
+                    ? "max-h-[600px] opacity-100"
                     : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="px-8 pb-6">
-                  <div className="flex items-center gap-4 mb-6 text-[#C5C8D3] italic text-[14px]">
+                <div className="px-5 sm:px-8 pb-6">
+                  <div className="flex flex-wrap items-center gap-3 mb-6 text-[#C5C8D3] italic text-sm">
                     <span>{exp.period}</span>
                     <div className="flex items-center gap-2">
                       <svg
                         className="w-4 h-4 text-[#4A9EFF]"
                         fill="currentColor"
                         viewBox="0 0 20 20"
+                        aria-hidden="true"
                       >
                         <path
                           fillRule="evenodd"
@@ -241,12 +239,12 @@ const Experience = () => {
                   </div>
 
                   <ul className="space-y-3">
-                    {exp.responsibilities.map((responsibility, index) => (
+                    {exp.responsibilities.map((responsibility, i) => (
                       <li
-                        key={index}
-                        className="text-[#C5C8D3] flex items-start gap-3 text-[16px]"
+                        key={i}
+                        className="text-[#C5C8D3] flex items-start gap-3 text-base"
                       >
-                        <span className="text-gray-500 mt-1">•</span>
+                        <span className="text-gray-500 mt-1" aria-hidden="true">•</span>
                         <span>{responsibility}</span>
                       </li>
                     ))}

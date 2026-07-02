@@ -5,10 +5,12 @@ import Experience from "@/components/views/Home/Experience";
 import Projects from "@/components/views/Home/Projects";
 import Skills from "@/components/views/Home/Skills";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
     <main className="">
+      <Navbar />
       <Hero />
       <About />
       <Skills />

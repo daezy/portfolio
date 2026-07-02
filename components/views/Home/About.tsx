@@ -20,103 +20,68 @@ const About = () => {
       handler: EventListener;
     }> = [];
 
-    const ctx = gsap.context(() => {
-      // Heading animation - simple fade and slide
-      gsap.from(h2Ref.current, {
-        scrollTrigger: {
-          trigger: h2Ref.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power3.out",
-      });
+    const mm = gsap.matchMedia();
 
-      // Staggered paragraph animations
-      const paragraphs = [p1Ref.current, p2Ref.current, p3Ref.current];
-
-      paragraphs.forEach((p, index) => {
-        if (!p) return;
-
-        gsap.from(p, {
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        gsap.from(h2Ref.current, {
           scrollTrigger: {
-            trigger: p,
+            trigger: h2Ref.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
           opacity: 0,
-          y: 60,
-          duration: 1,
-          ease: "power2.out",
-          delay: index * 0.2,
+          x: -60,
+          duration: 0.9,
+          ease: "power4.out",
         });
-      });
 
-      // Subtle parallax effect
-      paragraphs.forEach((p, index) => {
-        if (!p) return;
+        const paragraphs = [p1Ref.current, p2Ref.current, p3Ref.current];
 
-        gsap.to(p, {
+        // Single trigger on the section so stagger works as designed
+        gsap.from(paragraphs, {
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
+            start: "top 70%",
+            toggleActions: "play none none reverse",
           },
-          y: -20 * (index + 1),
-          ease: "none",
+          opacity: 0,
+          y: 40,
+          stagger: 0.18,
+          duration: 0.85,
+          ease: "power3.out",
         });
-      });
 
-      // Hover effect on paragraphs
-      paragraphs.forEach((p) => {
-        if (!p) return;
-
-        const handleMouseEnter = () => {
-          gsap.to(p, {
-            x: 5,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        };
-
-        const handleMouseLeave = () => {
-          gsap.to(p, {
-            x: 0,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        };
-
-        p.addEventListener("mouseenter", handleMouseEnter);
-        p.addEventListener("mouseleave", handleMouseLeave);
-        listeners.push({
-          el: p,
-          event: "mouseenter",
-          handler: handleMouseEnter,
+        paragraphs.forEach((p) => {
+          if (!p) return;
+          const handleMouseEnter = () => {
+            gsap.to(p, { x: 5, duration: 0.3, ease: "power2.out" });
+          };
+          const handleMouseLeave = () => {
+            gsap.to(p, { x: 0, duration: 0.3, ease: "power2.out" });
+          };
+          p.addEventListener("mouseenter", handleMouseEnter);
+          p.addEventListener("mouseleave", handleMouseLeave);
+          listeners.push({ el: p, event: "mouseenter", handler: handleMouseEnter });
+          listeners.push({ el: p, event: "mouseleave", handler: handleMouseLeave });
         });
-        listeners.push({
-          el: p,
-          event: "mouseleave",
-          handler: handleMouseLeave,
-        });
-      });
-    }, sectionRef);
+      }, sectionRef);
 
-    return () => {
-      ctx.revert();
-      listeners.forEach(({ el, event, handler }) =>
-        el.removeEventListener(event, handler),
-      );
-    };
+      return () => {
+        ctx.revert();
+        listeners.forEach(({ el, event, handler }) =>
+          el.removeEventListener(event, handler),
+        );
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
     <div ref={sectionRef}>
       <Container>
-        <h2 ref={h2Ref} className="text-white font-bold text-[48px] mb-3">
+        <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           About Me
         </h2>
         <p ref={p1Ref}>

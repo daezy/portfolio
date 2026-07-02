@@ -7,7 +7,7 @@ const Divider = () => {
     <Image
       src={DividerImage}
       alt="Divider"
-      className="my-2 absolute bottom-0"
+      className="my-2 absolute bottom-0 w-full h-auto"
     />
   );
 };

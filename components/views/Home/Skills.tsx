@@ -24,254 +24,250 @@ const Skills = () => {
   const otherSkillsHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const listeners: Array<{
-      el: Element;
-      event: string;
-      handler: EventListener;
-    }> = [];
+    const mm = gsap.matchMedia();
 
-    const ctx = gsap.context(() => {
-      // Header animations
-      gsap.from(h2Ref.current, {
-        scrollTrigger: {
-          trigger: h2Ref.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        x: -100,
-        duration: 1,
-        ease: "power3.out",
-      });
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const listeners: Array<{
+        el: Element;
+        event: string;
+        handler: EventListener;
+      }> = [];
 
-      gsap.from(pRef.current, {
-        scrollTrigger: {
-          trigger: pRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-
-      // Card animations with stagger
-      const cards = [
-        card1Ref.current,
-        card2Ref.current,
-        card3Ref.current,
-        card4Ref.current,
-      ];
-
-      gsap.from(cards, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 60%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        scale: 0.8,
-        y: 100,
-        rotation: -5,
-        stagger: 0.15,
-        duration: 1,
-        ease: "back.out(1.4)",
-      });
-
-      // Image parallax and reveal animations
-      const images = sectionRef.current?.querySelectorAll("img");
-      images?.forEach((img, index) => {
-        // Reveal animation
-        gsap.from(img, {
+      const ctx = gsap.context(() => {
+        gsap.from(h2Ref.current, {
           scrollTrigger: {
-            trigger: img,
+            trigger: h2Ref.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
           opacity: 0,
-          scale: 0.5,
-          rotation: index % 2 === 0 ? -10 : 10,
-          duration: 1.2,
-          ease: "elastic.out(1, 0.5)",
-          delay: 0.3,
+          x: -60,
+          duration: 0.9,
+          ease: "power4.out",
         });
 
-        // Parallax effect
-        gsap.to(img, {
+        gsap.from(pRef.current, {
           scrollTrigger: {
-            trigger: img.closest("div"),
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
+            trigger: pRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
           },
-          y: -30,
-          ease: "none",
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: "power3.out",
         });
-      });
 
-      // Card hover animations
-      cards.forEach((card) => {
-        if (!card) return;
-
-        const heading = card.querySelector("h3");
-        const text = card.querySelector("p");
-        const img = card.querySelector("img");
-
-        const handleEnter = () => {
-          gsap.to(card, {
-            scale: 1.02,
-            y: -10,
-            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-          gsap.to(heading, { x: 10, duration: 0.3, ease: "power2.out" });
-          gsap.to(text, { x: 5, duration: 0.3, ease: "power2.out" });
-          if (img)
-            gsap.to(img, {
-              scale: 1.1,
-              rotation: 5,
-              duration: 0.4,
-              ease: "power2.out",
-            });
-        };
-
-        const handleLeave = () => {
-          gsap.to(card, {
-            scale: 1,
-            y: 0,
-            boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-          gsap.to([heading, text], { x: 0, duration: 0.3, ease: "power2.out" });
-          if (img)
-            gsap.to(img, {
-              scale: 1,
-              rotation: 0,
-              duration: 0.4,
-              ease: "power2.out",
-            });
-        };
-
-        card.addEventListener("mouseenter", handleEnter);
-        card.addEventListener("mouseleave", handleLeave);
-        listeners.push({ el: card, event: "mouseenter", handler: handleEnter });
-        listeners.push({ el: card, event: "mouseleave", handler: handleLeave });
-      });
-
-      // Animate "Other skills include" heading
-      gsap.from(otherSkillsHeadingRef.current, {
-        scrollTrigger: {
-          trigger: otherSkillsHeadingRef.current,
-          start: "top 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-
-      // Animate small skill cards
-      const smallCards =
-        otherSkillsRef.current?.querySelectorAll(".small-card");
-      if (smallCards) {
-        gsap.from(smallCards, {
+        // Cards enter from their grid direction
+        gsap.from(card1Ref.current, {
           scrollTrigger: {
-            trigger: otherSkillsRef.current,
+            trigger: sectionRef.current,
+            start: "top 65%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          x: -60,
+          duration: 0.85,
+          ease: "power4.out",
+        });
+
+        gsap.from(card2Ref.current, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 65%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          x: 60,
+          duration: 0.85,
+          ease: "power4.out",
+          delay: 0.08,
+        });
+
+        gsap.from(card3Ref.current, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 65%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          x: 60,
+          duration: 0.85,
+          ease: "power4.out",
+          delay: 0.16,
+        });
+
+        gsap.from(card4Ref.current, {
+          scrollTrigger: {
+            trigger: card4Ref.current,
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
           opacity: 0,
           y: 50,
-          scale: 0.9,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "back.out(1.7)",
+          duration: 0.85,
+          ease: "power4.out",
         });
 
-        // Hover animations for small cards
-        smallCards.forEach((card) => {
-          const star = card.querySelector("img");
+        // Image reveals — desktop only, since images are hidden on mobile
+        const images = sectionRef.current?.querySelectorAll(".skill-card-image");
+        images?.forEach((img, index) => {
+          gsap.from(img, {
+            scrollTrigger: {
+              trigger: img.closest(".skill-card"),
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+            opacity: 0,
+            scale: 0.88,
+            rotation: index % 2 === 0 ? -6 : 6,
+            duration: 0.9,
+            ease: "power3.out",
+            delay: 0.25,
+          });
+
+          gsap.to(img, {
+            scrollTrigger: {
+              trigger: img.closest(".skill-card"),
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            },
+            y: -20,
+            ease: "none",
+          });
+        });
+
+        // Card hover — lift and shadow only
+        const cards = [
+          card1Ref.current,
+          card2Ref.current,
+          card3Ref.current,
+          card4Ref.current,
+        ];
+
+        cards.forEach((card) => {
+          if (!card) return;
+          const img = card.querySelector(".skill-card-image");
 
           const handleEnter = () => {
             gsap.to(card, {
-              y: -5,
-              scale: 1.05,
-              boxShadow: "0 10px 30px rgba(28, 102, 194, 0.3)",
-              duration: 0.3,
+              y: -8,
+              boxShadow: "0 24px 48px rgba(0, 0, 0, 0.35)",
+              duration: 0.35,
               ease: "power2.out",
             });
-            if (star)
-              gsap.to(star, {
-                rotation: 360,
-                scale: 1.2,
-                duration: 0.5,
-                ease: "back.out(1.7)",
-              });
+            if (img)
+              gsap.to(img, { scale: 1.04, duration: 0.4, ease: "power2.out" });
           };
 
           const handleLeave = () => {
             gsap.to(card, {
               y: 0,
-              scale: 1,
               boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
-              duration: 0.3,
+              duration: 0.35,
               ease: "power2.out",
             });
-            if (star)
-              gsap.to(star, {
-                rotation: 0,
-                scale: 1,
-                duration: 0.5,
-                ease: "power2.out",
-              });
+            if (img)
+              gsap.to(img, { scale: 1, duration: 0.4, ease: "power2.out" });
           };
 
           card.addEventListener("mouseenter", handleEnter);
           card.addEventListener("mouseleave", handleLeave);
-          listeners.push({
-            el: card,
-            event: "mouseenter",
-            handler: handleEnter,
-          });
-          listeners.push({
-            el: card,
-            event: "mouseleave",
-            handler: handleLeave,
-          });
+          listeners.push({ el: card, event: "mouseenter", handler: handleEnter });
+          listeners.push({ el: card, event: "mouseleave", handler: handleLeave });
         });
 
-        // Continuous subtle rotation for stars
-        const stars =
-          otherSkillsRef.current?.querySelectorAll(".small-card img");
-        stars?.forEach((star, index) => {
-          gsap.to(star, {
-            rotation: 10,
-            duration: 2 + index * 0.3,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: index * 0.2,
-          });
+        gsap.from(otherSkillsHeadingRef.current, {
+          scrollTrigger: {
+            trigger: otherSkillsHeadingRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: "power3.out",
         });
-      }
-    }, sectionRef);
 
-    return () => {
-      ctx.revert();
-      listeners.forEach(({ el, event, handler }) =>
-        el.removeEventListener(event, handler),
-      );
-    };
+        const smallCards = otherSkillsRef.current?.querySelectorAll(".small-card");
+        if (smallCards) {
+          gsap.from(smallCards, {
+            scrollTrigger: {
+              trigger: otherSkillsRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+            opacity: 0,
+            y: 40,
+            scale: 0.95,
+            stagger: 0.12,
+            duration: 0.7,
+            ease: "power4.out",
+          });
+
+          smallCards.forEach((card) => {
+            const star = card.querySelector("img");
+
+            const handleEnter = () => {
+              gsap.to(card, {
+                y: -4,
+                scale: 1.03,
+                boxShadow: "0 10px 28px rgba(28, 102, 194, 0.25)",
+                duration: 0.3,
+                ease: "power2.out",
+              });
+              if (star)
+                gsap.to(star, { rotation: 45, duration: 0.4, ease: "power3.out" });
+            };
+
+            const handleLeave = () => {
+              gsap.to(card, {
+                y: 0,
+                scale: 1,
+                boxShadow: "0 0 0 rgba(0, 0, 0, 0)",
+                duration: 0.3,
+                ease: "power2.out",
+              });
+              if (star)
+                gsap.to(star, { rotation: 0, duration: 0.4, ease: "power3.out" });
+            };
+
+            card.addEventListener("mouseenter", handleEnter);
+            card.addEventListener("mouseleave", handleLeave);
+            listeners.push({ el: card, event: "mouseenter", handler: handleEnter });
+            listeners.push({ el: card, event: "mouseleave", handler: handleLeave });
+          });
+
+          const stars = otherSkillsRef.current?.querySelectorAll(".small-card img");
+          stars?.forEach((star, index) => {
+            gsap.to(star, {
+              rotation: 8,
+              duration: 2.5 + index * 0.4,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+              delay: index * 0.3,
+            });
+          });
+        }
+      }, sectionRef);
+
+      return () => {
+        ctx.revert();
+        listeners.forEach(({ el, event, handler }) =>
+          el.removeEventListener(event, handler),
+        );
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (
     <div ref={sectionRef}>
       <Container>
-        <h2 ref={h2Ref} className="text-white font-bold text-[48px] mb-3">
+        <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           Skills
         </h2>
         <p ref={pRef}>
@@ -279,17 +275,18 @@ const Skills = () => {
           and adaptability to evolving project needs.
         </p>
 
-        <div className="grid grid-cols-8 gap-6 mt-8 mb-5">
-          {/* Front-End Development */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-6 mt-8 mb-5">
+
+          {/* Front-End Development — left half on desktop, full width on mobile/tablet */}
           <div
             ref={card1Ref}
-            className="bg-[#131415] rounded-[24px] p-10 flex flex-col justify-between min-h-[400px] col-span-4 row-span-2 gap-[20px] relative overflow-hidden"
+            className="skill-card bg-[#131415] rounded-[24px] p-6 lg:p-10 flex flex-col justify-between lg:min-h-[400px] col-span-1 md:col-span-2 lg:col-span-4 lg:row-span-2 gap-5 relative overflow-hidden"
           >
             <div>
-              <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
+              <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-[32px] text-white mb-4 leading-tight">
                 Front-End Development
               </h3>
-              <p className="text-[#C5C8D3] text-[15px] leading-6">
+              <p className="text-[#C5C8D3] text-base leading-7">
                 I design and develop user interfaces for websites, web
                 applications, mobile applications, DApps and utilities focusing
                 on creating responsive, visually appealing, and user-friendly,
@@ -297,102 +294,88 @@ const Skills = () => {
                 secure backend systems.
               </p>
             </div>
-            <div className="mt-6 absolute bottom-0 left-0">
-              <Image
-                src={FrontendImage}
-                alt="Front-End Development"
-                width={430}
-              />
+            <div className="hidden lg:block absolute bottom-0 left-0 skill-card-image">
+              <Image src={FrontendImage} alt="Front-End Development" width={430} />
             </div>
           </div>
 
-          {/* Backend Development */}
+          {/* Backend Development — right half on desktop */}
           <div
             ref={card2Ref}
-            className="bg-[#131415] rounded-[24px] p-8 flex flex-col col-span-4 row-span-1 relative overflow-hidden"
+            className="skill-card bg-[#131415] rounded-[24px] p-6 lg:p-8 flex flex-col col-span-1 lg:col-span-4 lg:row-span-1 relative overflow-hidden"
           >
-            <div className="flex justify-between items-start">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
-                    Backend Development
-                  </h3>
-                  <p className="text-[#C5C8D3] text-[15px] leading-6">
-                    I build and manage server-side applications, ensuring they
-                    are efficient, secure, and scalable for handling data and
-                    user requests.
-                  </p>
-                </div>
-                <div className="absolute right-10 -top-2">
-                  <Image
-                    src={BackendImage}
-                    alt="Backend Development"
-                    width={500}
-                  />
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div>
+                <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-[32px] text-white mb-4 leading-tight">
+                  Backend Development
+                </h3>
+                <p className="text-[#C5C8D3] text-base leading-7">
+                  I build and manage server-side applications, ensuring they
+                  are efficient, secure, and scalable for handling data and
+                  user requests.
+                </p>
+              </div>
+              <div className="hidden lg:block absolute right-10 -top-2 skill-card-image">
+                <Image src={BackendImage} alt="Backend Development" width={500} />
               </div>
             </div>
           </div>
 
-          {/* Web3 Development */}
+          {/* Web3 Development — right half on desktop */}
           <div
             ref={card3Ref}
-            className="bg-[#131415] rounded-[24px] p-8 flex flex-col col-span-4 row-span-1 relative overflow-hidden"
+            className="skill-card bg-[#131415] rounded-[24px] p-6 lg:p-8 flex flex-col col-span-1 lg:col-span-4 lg:row-span-1 relative overflow-hidden"
           >
-            <div className="flex justify-between items-start">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="">
-                  <Image
-                    src={Web3Image}
-                    alt="Web3 Development"
-                    width={270}
-                    className="absolute -top-7 left-0"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
-                    Web3 Development
-                  </h3>
-                  <p className="text-[#C5C8D3] text-[15px] leading-6">
-                    I develop decentralized applications (dApps) and web3
-                    utilities on blockchain platforms, primarily using EVM-based
-                    chains and Solana, to create secure, scalable, and
-                    user-friendly solutions.
-                  </p>
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="hidden lg:block">
+                <Image
+                  src={Web3Image}
+                  alt="Web3 Development"
+                  width={270}
+                  className="skill-card-image absolute -top-7 left-0"
+                />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-[32px] text-white mb-4 leading-tight">
+                  Web3 Development
+                </h3>
+                <p className="text-[#C5C8D3] text-base leading-7">
+                  I develop decentralized applications (dApps) and web3
+                  utilities on blockchain platforms, primarily using EVM-based
+                  chains and Solana, to create secure, scalable, and
+                  user-friendly solutions.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Mobile Development */}
+          {/* Mobile Development — full width on desktop, full width on mobile/tablet */}
           <div
             ref={card4Ref}
-            className="bg-[#131415] rounded-[24px] p-8 flex flex-col col-span-8 row-span-1 relative overflow-hidden"
+            className="skill-card bg-[#131415] rounded-[24px] p-6 lg:p-8 flex flex-col col-span-1 md:col-span-2 lg:col-span-8 lg:row-span-1 relative overflow-hidden"
           >
-            <div className="flex justify-between items-start">
-              <div className="grid grid-cols-2 gap-4 items-center justify-center">
-                <div className="">
-                  <div className="h-[200px]">
-                    <Image
-                      src={MobileImage}
-                      alt="Mobile Development"
-                      width={500}
-                      className="absolute bottom-0 left-8"
-                    />
-                  </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:items-center">
+              <div className="hidden lg:block">
+                <div className="h-[200px]">
+                  <Image
+                    src={MobileImage}
+                    alt="Mobile Development"
+                    width={500}
+                    className="skill-card-image absolute bottom-0 left-8"
+                  />
                 </div>
-                <div>
-                  <h3 className="text-white font-bold text-[32px] mb-4 leading-8">
-                    Mobile Development
-                  </h3>
-                  <p className="text-[#C5C8D3] text-[15px] leading-6">
-                    I develop mobile apps that are fast, intuitive, and
-                    cross-platform ready. Whether it&apos;ss building with React
-                    Native or optimizing for iOS and Android, I focus on
-                    performance, clean architecture, and delivering a seamless
-                    user experience.
-                  </p>
-                </div>
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-[32px] text-white mb-4 leading-tight">
+                  Mobile Development
+                </h3>
+                <p className="text-[#C5C8D3] text-base leading-7">
+                  I develop mobile apps that are fast, intuitive, and
+                  cross-platform ready. Whether it&apos;s building with React
+                  Native or optimizing for iOS and Android, I focus on
+                  performance, clean architecture, and delivering a seamless
+                  user experience.
+                </p>
               </div>
             </div>
           </div>
@@ -402,17 +385,17 @@ const Skills = () => {
           <h5 ref={otherSkillsHeadingRef} className="mb-6 text-xl">
             Other skills include
           </h5>
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
             <div className="small-card bg-[#131415] p-4 flex gap-3 items-center rounded-[8px]">
-              <Image src={StarImage} alt="Star" width={24} />
+              <Image src={StarImage} alt="" aria-hidden="true" width={24} />
               <p>Smart contracts (for Solana using Rust)</p>
             </div>
             <div className="small-card bg-[#131415] p-4 flex gap-3 items-center rounded-[8px]">
-              <Image src={StarImage} alt="Star" width={24} />
+              <Image src={StarImage} alt="" aria-hidden="true" width={24} />
               <p>AI Powered Platforms</p>
             </div>
             <div className="small-card bg-[#131415] p-4 flex gap-3 items-center rounded-[8px]">
-              <Image src={StarImage} alt="Star" width={24} />
+              <Image src={StarImage} alt="" aria-hidden="true" width={24} />
               <p>Automated bots (on Telegram and X)</p>
             </div>
           </div>
