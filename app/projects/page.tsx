@@ -153,6 +153,7 @@ export default function ProjectsPage() {
                   alt={project.title}
                   className="w-full h-full object-cover"
                   placeholder="blur"
+                  draggable={false}
                 />
               </div>
 

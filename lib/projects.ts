@@ -48,7 +48,9 @@ export interface Project {
   gallery: StaticImageData[];
 }
 
-// Ordered strongest-first for the projects listing and detail prev/next navigation.
+// Ordered strongest-first, with no two adjacent entries sharing a domain so the
+// leading cards read as range rather than repetition. Drives the projects listing,
+// the detail prev/next navigation, and the homepage section (which takes the first 4).
 export const projects: Project[] = [
   {
     id: "veilo",
@@ -75,31 +77,6 @@ export const projects: Project[] = [
     url: "https://github.com/daezy",
     image: Veilo1,
     gallery: [Veilo1, Veilo2, Veilo3],
-  },
-  {
-    id: "koly-market",
-    title: "KOLy Market – Crypto KOL Prediction Markets",
-    description:
-      "A Solana-based prediction markets platform where users can forecast whether crypto influencers will hit specific profit targets using real KOL performance data.",
-    longDescription:
-      "KOLy Market is a prediction markets platform built around crypto influencer performance. The platform allows users to explore markets tied to KOL profit targets, choose YES or NO positions, track active trades, and view outcomes resolved through an oracle based on real KOL performance data. It also includes demo mode, wallet authentication, KOL rankings, live market activity, portfolio tracking, leaderboards, market creation, and gamified XP levels to make the experience more interactive and data-driven.",
-    technologies: [
-      "Next.js",
-      "React.js",
-      "TypeScript",
-      "Solana",
-      "Wallet Adapter",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "WebSockets",
-    ],
-    date: "2026",
-    projectType: "Prediction Markets Platform",
-    client: "KOLy Market",
-    url: "https://demo.kolymarket.io/",
-    image: Koly1,
-    gallery: [Koly1, Koly2, Koly3],
   },
   {
     id: "aiforge",
@@ -150,29 +127,53 @@ export const projects: Project[] = [
     gallery: [Turbo1, Turbo2, Turbo3],
   },
   {
-    id: "areaa",
-    title: "AREAA – Campus Commerce & Discovery Platform",
+    id: "koly-market",
+    title: "KOLy Market – Crypto KOL Prediction Markets",
     description:
-      "A campus-focused marketplace that connects students with vendors, service providers, and delivery riders. Features product discovery, service listings, orders, payments, delivery flow, reviews, and admin management.",
+      "A Solana-based prediction markets platform where users can forecast whether crypto influencers will hit specific profit targets using real KOL performance data.",
     longDescription:
-      "AREAA is a campus commerce and discovery platform built to help students find quality goods and services around their campus. The platform connects buyers, vendors, service providers, riders, and admins in one system. It supports vendor onboarding, product and service listings, search and filtering, order placement, payment links, delivery tasks, reviews, and dispute handling. The goal is to make campus buying, selling, service booking, and delivery more organized and accessible.",
+      "KOLy Market is a prediction markets platform built around crypto influencer performance. The platform allows users to explore markets tied to KOL profit targets, choose YES or NO positions, track active trades, and view outcomes resolved through an oracle based on real KOL performance data. It also includes demo mode, wallet authentication, KOL rankings, live market activity, portfolio tracking, leaderboards, market creation, and gamified XP levels to make the experience more interactive and data-driven.",
     technologies: [
       "Next.js",
+      "React.js",
       "TypeScript",
+      "Solana",
+      "Wallet Adapter",
       "Node.js",
       "Express",
       "MongoDB",
-      "Redis",
-      "Paystack",
-      "Zustand",
-      "React Query",
+      "WebSockets",
     ],
     date: "2026",
-    projectType: "Campus Commerce Platform",
-    client: "AREAA",
-    url: "https://areaa.com.ng",
-    image: Areaa1,
-    gallery: [Areaa1, Areaa2, Areaa3],
+    projectType: "Prediction Markets Platform",
+    client: "KOLy Market",
+    url: "https://demo.kolymarket.io/",
+    image: Koly1,
+    gallery: [Koly1, Koly2, Koly3],
+  },
+  {
+    id: "surveypulse",
+    title: "SurveyPulse – AI-Powered Survey Analysis Platform",
+    description:
+      "An AI-powered survey analysis platform that helps teams turn open-ended responses into clear insights through summarization, sentiment detection, theme extraction, and pain point analysis.",
+    longDescription:
+      "SurveyPulse is an AI-powered platform designed to help teams analyze open-ended survey responses faster and more effectively. The system uses large language models to process raw feedback, summarize responses, detect sentiment, extract recurring themes, and identify key pain points from user or developer feedback. It transforms unstructured survey data into organized insights, making it easier for teams to understand what users are saying, spot patterns, and make better product or research decisions.",
+    technologies: [
+      "React.js",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "MongoDB",
+      "LLM APIs",
+      "Natural Language Processing",
+      "Data Visualization",
+    ],
+    date: "2026",
+    projectType: "AI Survey Analysis Platform",
+    client: "SurveyPulse",
+    url: "https://surveypulse-frontend.onrender.com/",
+    image: Surveypulse1,
+    gallery: [Surveypulse1, Surveypulse2, Surveypulse3],
   },
   {
     id: "mevfury",
@@ -200,6 +201,31 @@ export const projects: Project[] = [
     gallery: [Mevfury1, Mevfury2, Mevfury3],
   },
   {
+    id: "areaa",
+    title: "AREAA – Campus Commerce & Discovery Platform",
+    description:
+      "A campus-focused marketplace that connects students with vendors, service providers, and delivery riders. Features product discovery, service listings, orders, payments, delivery flow, reviews, and admin management.",
+    longDescription:
+      "AREAA is a campus commerce and discovery platform built to help students find quality goods and services around their campus. The platform connects buyers, vendors, service providers, riders, and admins in one system. It supports vendor onboarding, product and service listings, search and filtering, order placement, payment links, delivery tasks, reviews, and dispute handling. The goal is to make campus buying, selling, service booking, and delivery more organized and accessible.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Redis",
+      "Paystack",
+      "Zustand",
+      "React Query",
+    ],
+    date: "2026",
+    projectType: "Campus Commerce Platform",
+    client: "AREAA",
+    url: "https://areaa.com.ng",
+    image: Areaa1,
+    gallery: [Areaa1, Areaa2, Areaa3],
+  },
+  {
     id: "vaultspin",
     title: "VaultSpin – Pack Opening & Gaming Platform",
     description:
@@ -221,30 +247,6 @@ export const projects: Project[] = [
     url: "https://vaultspin-optimized.vercel.app/",
     image: Vaultspin1,
     gallery: [Vaultspin1, Vaultspin2, Vaultspin3],
-  },
-  {
-    id: "surveypulse",
-    title: "SurveyPulse – AI-Powered Survey Analysis Platform",
-    description:
-      "An AI-powered survey analysis platform that helps teams turn open-ended responses into clear insights through summarization, sentiment detection, theme extraction, and pain point analysis.",
-    longDescription:
-      "SurveyPulse is an AI-powered platform designed to help teams analyze open-ended survey responses faster and more effectively. The system uses large language models to process raw feedback, summarize responses, detect sentiment, extract recurring themes, and identify key pain points from user or developer feedback. It transforms unstructured survey data into organized insights, making it easier for teams to understand what users are saying, spot patterns, and make better product or research decisions.",
-    technologies: [
-      "React.js",
-      "TypeScript",
-      "FastAPI",
-      "Python",
-      "MongoDB",
-      "LLM APIs",
-      "Natural Language Processing",
-      "Data Visualization",
-    ],
-    date: "2026",
-    projectType: "AI Survey Analysis Platform",
-    client: "SurveyPulse",
-    url: "https://surveypulse-frontend.onrender.com/",
-    image: Surveypulse1,
-    gallery: [Surveypulse1, Surveypulse2, Surveypulse3],
   },
   {
     id: "dogemeat-pay",

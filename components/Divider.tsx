@@ -8,6 +8,7 @@ const Divider = () => {
       src={DividerImage}
       alt="Divider"
       className="my-2 absolute bottom-0 w-full h-auto"
+      draggable={false}
     />
   );
 };

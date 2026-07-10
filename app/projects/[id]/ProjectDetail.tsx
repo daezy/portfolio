@@ -213,6 +213,7 @@ export default function ProjectDetail({ id }: { id: string }) {
               alt={`${project.title} — main screenshot`}
               className="w-full h-[240px] md:h-[420px] object-cover"
               placeholder="blur"
+              draggable={false}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -223,6 +224,7 @@ export default function ProjectDetail({ id }: { id: string }) {
                   alt={`${project.title} — screenshot ${i + 2}`}
                   className="w-full h-[200px] md:h-[220px] object-cover"
                   placeholder="blur"
+                  draggable={false}
                 />
               </div>
             ))}

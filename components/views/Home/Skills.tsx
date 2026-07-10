@@ -293,7 +293,7 @@ const Skills = () => {
               </p>
             </div>
             <div className="hidden lg:block absolute bottom-0 left-0 skill-card-image">
-              <Image src={FrontendImage} alt="Front-End Development" width={430} />
+              <Image src={FrontendImage} alt="Front-End Development" width={430} draggable={false} />
             </div>
           </div>
 
@@ -314,7 +314,7 @@ const Skills = () => {
                 </p>
               </div>
               <div className="hidden lg:flex items-center absolute inset-y-0 right-10 skill-card-image">
-                <Image src={BackendImage} alt="Backend Development" width={500} />
+                <Image src={BackendImage} alt="Backend Development" width={500} draggable={false} />
               </div>
             </div>
           </div>
@@ -331,6 +331,7 @@ const Skills = () => {
                   alt="Web3 Development"
                   width={270}
                   className="skill-card-image absolute inset-y-0 my-auto left-0"
+                  draggable={false}
                 />
               </div>
               <div>
@@ -360,6 +361,7 @@ const Skills = () => {
                     alt="Mobile Development"
                     width={500}
                     className="skill-card-image absolute bottom-0 left-8"
+                    draggable={false}
                   />
                 </div>
               </div>
@@ -385,15 +387,15 @@ const Skills = () => {
           </h5>
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4">
             <div className="small-card bg-[#131415] p-4 flex gap-3 items-center rounded-[8px]">
-              <Image src={StarImage} alt="" aria-hidden="true" width={24} />
+              <Image src={StarImage} alt="" aria-hidden="true" width={24} draggable={false} />
               <p>Smart contracts (for Solana using Rust)</p>
             </div>
             <div className="small-card bg-[#131415] p-4 flex gap-3 items-center rounded-[8px]">
-              <Image src={StarImage} alt="" aria-hidden="true" width={24} />
+              <Image src={StarImage} alt="" aria-hidden="true" width={24} draggable={false} />
               <p>AI Powered Platforms</p>
             </div>
             <div className="small-card bg-[#131415] p-4 flex gap-3 items-center rounded-[8px]">
-              <Image src={StarImage} alt="" aria-hidden="true" width={24} />
+              <Image src={StarImage} alt="" aria-hidden="true" width={24} draggable={false} />
               <p>Automated bots (on Telegram and X)</p>
             </div>
           </div>

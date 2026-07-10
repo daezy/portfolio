@@ -99,3 +99,9 @@ h3 {
     animation: none;
   }
 }
+
+/* Images are presentational — prevent ghost-drag. Firefox needs draggable="false" too. */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}

@@ -131,7 +131,7 @@ const Hero = () => {
           </div>
         </div>
         <div ref={imageRef} className="img-hero w-[180px] sm:w-[220px] lg:w-[381px] flex-shrink-0 order-first lg:order-last">
-          <Image src={Me} alt="Daniel Ezet Onoriode" className="rounded-full w-full h-auto" />
+          <Image src={Me} alt="Daniel Ezet Onoriode" className="rounded-full w-full h-auto" draggable={false} />
         </div>
 
         <HeroCarousel />
