@@ -115,7 +115,7 @@ const Hero = () => {
           </p>
           <div ref={btnGroupRef} className="btn-group flex gap-3 mt-5 justify-center lg:justify-start">
             <a
-              href="/resume.pdf"
+              href="/Onoriode-Ezet_Daniel_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-[#1C66C2] border border-[#FFFFFF33] text-white px-9 py-4 rounded-full transition-colors text-sm font-semibold"
