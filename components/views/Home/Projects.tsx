@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import Container from "../../Container";
-import Project1 from "@/public/images/projects/1.png";
-import Project2 from "@/public/images/projects/2.png";
-import Project3 from "@/public/images/projects/3.png";
-import Project4 from "@/public/images/projects/4.png";
+import Turbo1 from "@/public/images/projects/turbo1.png";
+import Koly1 from "@/public/images/projects/koly1.png";
+import Vaultspin1 from "@/public/images/projects/vaultspin1.png";
+import Areaa1 from "@/public/images/projects/areaa1.png";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -37,11 +37,11 @@ const Projects = () => {
           scrollTrigger: {
             trigger: h2Ref.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: -100,
-          duration: 1,
+          x: -32,
+          duration: 0.6,
           ease: "power3.out",
         });
 
@@ -49,11 +49,11 @@ const Projects = () => {
           scrollTrigger: {
             trigger: pRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 30,
-          duration: 0.8,
+          y: 18,
+          duration: 0.5,
           ease: "power2.out",
         });
 
@@ -68,13 +68,12 @@ const Projects = () => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 60%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 80,
-          scale: 0.95,
-          stagger: 0.15,
-          duration: 0.8,
+          y: 32,
+          stagger: 0.1,
+          duration: 0.55,
           ease: "power2.out",
         });
 
@@ -150,14 +149,15 @@ const Projects = () => {
   }, []);
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} id="projects">
       <Container>
         <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           Projects
         </h2>
         <p ref={pRef}>
-          Here are some things I&apos;ve built — from passion projects to
-          real-world apps — that showcase how I think, code, and solve problems.
+          Here are selected projects I&apos;ve built across Web3, AI, real-time
+          systems, marketplaces, and developer-focused products — showcasing how
+          I design, engineer, and ship practical software solutions.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-5">
@@ -165,24 +165,26 @@ const Projects = () => {
             ref={card1Ref}
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
-            <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project1} alt="Project 1" className="w-full" />
+            <div className="project-image rounded-[24px] mb-3 overflow-hidden h-[300px] md:h-[340px]">
+              <Image src={Turbo1} alt="Turbo live streaming platform" className="w-full h-full object-cover" />
             </div>
             <div>
               <h3 className="text-white font-bold text-h3 mb-4">
-                TaskPilot – Productivity Task Manager
+                Turbo – Live Streaming Platform
               </h3>
               <p className="text-[#C5C8D3] text-base leading-7">
-                A Kanban-style productivity app with drag-and-drop features,
-                real-time collaboration using WebSockets, and user
-                authentication via JWT.
+                A live streaming platform built for creators and viewers,
+                featuring real-time video streaming, live chat, creator
+                channels, subscriptions, and content discovery.
               </p>
-              <button
-                type="button"
-                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
-              >
-                View Project <BsCaretRight />
-              </button>
+              <Link href="/projects/turbo" className="inline-block">
+                <button
+                  type="button"
+                  className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
+                >
+                  View Project <BsCaretRight />
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -190,24 +192,26 @@ const Projects = () => {
             ref={card2Ref}
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
-            <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project2} alt="DevDeck portfolio builder" className="w-full" />
+            <div className="project-image rounded-[24px] mb-3 overflow-hidden h-[300px] md:h-[340px]">
+              <Image src={Vaultspin1} alt="VaultSpin pack opening and gaming platform" className="w-full h-full object-cover" />
             </div>
             <div>
               <h3 className="text-white font-bold text-h3 mb-4">
-                DevDeck – Developer Portfolio Builder
+                VaultSpin – Pack Opening & Gaming Platform
               </h3>
               <p className="text-[#C5C8D3] text-base leading-7">
-                Create and deploy fully customizable portfolio websites without
-                writing a single line of code — designers, and creatives who
-                want a professional online presence with ease.
+                A gamified pack-opening platform where users can open packs,
+                receive items based on odds, forge items, and interact with
+                real-time gaming mechanics.
               </p>
-              <button
-                type="button"
-                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
-              >
-                View Project <BsCaretRight />
-              </button>
+              <Link href="/projects/vaultspin" className="inline-block">
+                <button
+                  type="button"
+                  className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
+                >
+                  View Project <BsCaretRight />
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -215,24 +219,26 @@ const Projects = () => {
             ref={card3Ref}
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
-            <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project3} alt="BugSquash issue tracker" className="w-full" />
+            <div className="project-image rounded-[24px] mb-3 overflow-hidden h-[300px] md:h-[340px]">
+              <Image src={Areaa1} alt="AREAA campus commerce and discovery platform" className="w-full h-full object-cover" />
             </div>
             <div>
               <h3 className="text-white font-bold text-h3 mb-4">
-                BugSquash – Lightweight Issue Tracker
+                AREAA – Campus Commerce & Discovery Platform
               </h3>
               <p className="text-[#C5C8D3] text-base leading-7">
-                A simplified bug and issue tracking system designed for solo
-                devs or small teams. Features task management, tagging,
-                filtering, and real-time updates for streamlined workflows.
+                A campus-focused marketplace that connects students with
+                vendors, service providers, and delivery riders — product
+                discovery, service listings, orders, payments, and delivery.
               </p>
-              <button
-                type="button"
-                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
-              >
-                View Project <BsCaretRight />
-              </button>
+              <Link href="/projects/areaa" className="inline-block">
+                <button
+                  type="button"
+                  className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
+                >
+                  View Project <BsCaretRight />
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -240,25 +246,26 @@ const Projects = () => {
             ref={card4Ref}
             className="bg-[#131415] rounded-[24px] p-8 flex flex-col justify-between gap-[20px] relative overflow-hidden"
           >
-            <div className="project-image rounded-[24px] mb-3">
-              <Image src={Project4} alt="HabitForge habit tracker" className="w-full" />
+            <div className="project-image rounded-[24px] mb-3 overflow-hidden h-[300px] md:h-[340px]">
+              <Image src={Koly1} alt="KOLy Market crypto KOL prediction markets" className="w-full h-full object-cover" />
             </div>
             <div>
               <h3 className="text-white font-bold text-h3 mb-4">
-                HabitForge – Habit Tracker
+                KOLy Market – Crypto KOL Prediction Markets
               </h3>
               <p className="text-[#C5C8D3] text-base leading-7">
-                A personal habit tracker that helps users build routines and
-                track progress with visual stats. Set daily goals, monitor
-                streaks, and stay accountable with a clean, interactive
-                dashboard.
+                A Solana-based prediction markets platform where users can
+                forecast whether crypto influencers will hit specific profit
+                targets using real KOL performance data.
               </p>
-              <button
-                type="button"
-                className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full transition text-sm font-semibold flex items-center gap-2"
-              >
-                View Project <BsCaretRight />
-              </button>
+              <Link href="/projects/koly-market" className="inline-block">
+                <button
+                  type="button"
+                  className="bg-[#27292B] text-white px-8 mt-4 py-3 rounded-full text-sm font-semibold flex items-center gap-2"
+                >
+                  View Project <BsCaretRight />
+                </button>
+              </Link>
             </div>
           </div>
         </div>

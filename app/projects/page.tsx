@@ -29,9 +29,9 @@ export default function ProjectsPage() {
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       const ctx = gsap.context(() => {
         gsap.set(backBtnRef.current, { opacity: 0, y: -16 });
-        gsap.set(headingRef.current, { opacity: 0, x: -50 });
+        gsap.set(headingRef.current, { opacity: 0, x: -28 });
         gsap.set(subtitleRef.current, { opacity: 0, y: 18 });
-        gsap.set(cardRefs.current, { opacity: 0, y: 56, scale: 0.96 });
+        gsap.set(cardRefs.current, { opacity: 0, y: 28, scale: 0.98 });
 
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -132,8 +132,9 @@ export default function ProjectsPage() {
           ref={subtitleRef}
           className="max-w-[65ch] text-[#C5C8D3] text-[1.0625rem] leading-7 mb-10"
         >
-          Here are some things I&apos;ve built — from passion projects to real-world apps — that
-          showcase how I think, code, and solve problems.
+          Here are selected projects I&apos;ve built across Web3, AI, real-time systems,
+          marketplaces, and developer-focused products — showcasing how I design, engineer, and
+          ship practical software solutions.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -146,11 +147,11 @@ export default function ProjectsPage() {
               className="bg-[#131415] rounded-[24px] p-6 md:p-8 flex flex-col gap-5 overflow-hidden"
             >
               {/* Card image */}
-              <div className="card-image rounded-[18px] overflow-hidden">
+              <div className="card-image rounded-[18px] overflow-hidden h-[280px] md:h-[320px]">
                 <Image
                   src={project.image}
                   alt={project.title}
-                  className="w-full object-cover"
+                  className="w-full h-full object-cover"
                   placeholder="blur"
                 />
               </div>
@@ -184,7 +185,9 @@ export default function ProjectsPage() {
 
       {/* Footer */}
       <footer className="border-t border-white/10 py-8 flex flex-col items-center gap-5">
-        <p className="text-[#C5C8D3] text-sm">Copyright &copy; 2025 Daniel Ezet</p>
+        <p className="text-[#C5C8D3] text-sm">
+          Copyright &copy; {new Date().getFullYear()} Daniel Ezet
+        </p>
         <div className="flex items-center gap-3">
           {socialLinks.map((s) => (
             <a

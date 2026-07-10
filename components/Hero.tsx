@@ -25,11 +25,11 @@ const Hero = () => {
       const ctx = gsap.context(() => {
         gsap.set([h1Ref.current, pRef.current, btnGroupRef.current], {
           opacity: 0,
-          y: 50,
+          y: 28,
         });
         gsap.set(imageRef.current, {
           opacity: 0,
-          scale: 0.8,
+          scale: 0.92,
         });
 
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -37,39 +37,39 @@ const Hero = () => {
         tl.to(h1Ref.current, {
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 0.9,
           ease: "power4.out",
         })
           .to(
             pRef.current,
-            { opacity: 1, y: 0, duration: 1 },
-            "-=0.8",
+            { opacity: 1, y: 0, duration: 0.7 },
+            "-=0.6",
           )
           .to(
             btnGroupRef.current,
-            { opacity: 1, y: 0, duration: 0.8 },
-            "-=0.6",
+            { opacity: 1, y: 0, duration: 0.6 },
+            "-=0.45",
           )
           .to(
             imageRef.current,
             {
               opacity: 1,
               scale: 1,
-              duration: 1,
+              duration: 0.8,
               ease: "power4.out",
             },
-            "-=1",
+            "-=0.8",
           );
 
         gsap.to(imageRef.current, {
-          y: -20,
-          duration: 2,
+          y: -10,
+          duration: 2.5,
           repeat: -1,
           yoyo: true,
-          ease: "power1.inOut",
+          ease: "sine.inOut",
         });
 
-        const buttons = btnGroupRef.current?.querySelectorAll("button");
+        const buttons = btnGroupRef.current?.querySelectorAll("a");
         buttons?.forEach((button) => {
           const handleEnter = () => {
             gsap.to(button, { scale: 1.05, duration: 0.3, ease: "power2.out" });
@@ -114,18 +114,20 @@ const Hero = () => {
             Software Engineer with 5+ years of experience. Turning ideas into powerful digital experiences.
           </p>
           <div ref={btnGroupRef} className="btn-group flex gap-3 mt-5 justify-center lg:justify-start">
-            <button
-              type="button"
-              className="bg-[#1C66C2] border border-[#FFFFFF33] text-white px-9 py-4 rounded-full hover:bg-[#1C66C2] transition text-sm font-semibold"
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#1C66C2] border border-[#FFFFFF33] text-white px-9 py-4 rounded-full transition-colors text-sm font-semibold"
             >
               View Resume
-            </button>
-            <button
-              type="button"
-              className="bg-transparent border border-[#1C66C2] text-[#1C66C2] px-9 py-4 rounded-full hover:bg-[#1C66C2] hover:text-white transition text-sm font-semibold"
+            </a>
+            <a
+              href="#contact"
+              className="inline-block bg-transparent border border-[#1C66C2] text-[#1C66C2] px-9 py-4 rounded-full hover:bg-[#1C66C2] hover:text-white transition-colors text-sm font-semibold"
             >
               Contact Me
-            </button>
+            </a>
           </div>
         </div>
         <div ref={imageRef} className="img-hero w-[180px] sm:w-[220px] lg:w-[381px] flex-shrink-0 order-first lg:order-last">

@@ -38,11 +38,11 @@ const Skills = () => {
           scrollTrigger: {
             trigger: h2Ref.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: -60,
-          duration: 0.9,
+          x: -24,
+          duration: 0.55,
           ease: "power4.out",
         });
 
@@ -50,11 +50,11 @@ const Skills = () => {
           scrollTrigger: {
             trigger: pRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 24,
-          duration: 0.7,
+          y: 16,
+          duration: 0.5,
           ease: "power3.out",
         });
 
@@ -63,11 +63,11 @@ const Skills = () => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 65%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: -60,
-          duration: 0.85,
+          x: -24,
+          duration: 0.55,
           ease: "power4.out",
         });
 
@@ -75,11 +75,11 @@ const Skills = () => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 65%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: 60,
-          duration: 0.85,
+          x: 24,
+          duration: 0.55,
           ease: "power4.out",
           delay: 0.08,
         });
@@ -88,11 +88,11 @@ const Skills = () => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 65%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: 60,
-          duration: 0.85,
+          x: 24,
+          duration: 0.55,
           ease: "power4.out",
           delay: 0.16,
         });
@@ -101,29 +101,28 @@ const Skills = () => {
           scrollTrigger: {
             trigger: card4Ref.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 50,
-          duration: 0.85,
+          y: 24,
+          duration: 0.55,
           ease: "power4.out",
         });
 
         // Image reveals — desktop only, since images are hidden on mobile
         const images = sectionRef.current?.querySelectorAll(".skill-card-image");
-        images?.forEach((img, index) => {
+        images?.forEach((img) => {
           gsap.from(img, {
             scrollTrigger: {
               trigger: img.closest(".skill-card"),
               start: "top 80%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             },
             opacity: 0,
-            scale: 0.88,
-            rotation: index % 2 === 0 ? -6 : 6,
-            duration: 0.9,
+            scale: 0.96,
+            duration: 0.6,
             ease: "power3.out",
-            delay: 0.25,
+            delay: 0.15,
           });
 
           gsap.to(img, {
@@ -182,11 +181,11 @@ const Skills = () => {
           scrollTrigger: {
             trigger: otherSkillsHeadingRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 24,
-          duration: 0.7,
+          y: 16,
+          duration: 0.5,
           ease: "power3.out",
         });
 
@@ -196,13 +195,12 @@ const Skills = () => {
             scrollTrigger: {
               trigger: otherSkillsRef.current,
               start: "top 80%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             },
             opacity: 0,
-            y: 40,
-            scale: 0.95,
-            stagger: 0.12,
-            duration: 0.7,
+            y: 20,
+            stagger: 0.08,
+            duration: 0.5,
             ease: "power4.out",
           });
 
@@ -265,7 +263,7 @@ const Skills = () => {
   }, []);
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} id="skills">
       <Container>
         <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           Skills
@@ -315,7 +313,7 @@ const Skills = () => {
                   user requests.
                 </p>
               </div>
-              <div className="hidden lg:block absolute right-10 -top-2 skill-card-image">
+              <div className="hidden lg:flex items-center absolute inset-y-0 right-10 skill-card-image">
                 <Image src={BackendImage} alt="Backend Development" width={500} />
               </div>
             </div>
@@ -332,7 +330,7 @@ const Skills = () => {
                   src={Web3Image}
                   alt="Web3 Development"
                   width={270}
-                  className="skill-card-image absolute -top-7 left-0"
+                  className="skill-card-image absolute inset-y-0 my-auto left-0"
                 />
               </div>
               <div>

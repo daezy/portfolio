@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const Navbar = () => {
@@ -17,9 +18,9 @@ const Navbar = () => {
     <>
       <nav className="navbar fixed bg-[#17181A4D] border border-[#596573] max-w-[800px] w-[calc(100%-2rem)] sm:w-[calc(100%-4rem)] md:w-full top-5 left-1/2 transform -translate-x-1/2 rounded-full flex gap-7 items-center justify-between px-5 py-3 backdrop-blur-sm z-50">
         <div className="logo shrink-0">
-          <div className="image-wrapper rounded-full overflow-hidden">
-            <Image src="/images/me.png" alt="Logo" width={45} height={45} />
-          </div>
+          <Link href="/" aria-label="Home" className="image-wrapper block rounded-full overflow-hidden">
+            <Image src="/images/me.png" alt="Daniel Ezet" width={45} height={45} />
+          </Link>
         </div>
 
         <div className="nav-links hidden md:flex w-full items-center justify-center gap-9 font-medium">

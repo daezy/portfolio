@@ -14,12 +14,6 @@ const About = () => {
   const p3Ref = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    const listeners: Array<{
-      el: Element;
-      event: string;
-      handler: EventListener;
-    }> = [];
-
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -28,11 +22,11 @@ const About = () => {
           scrollTrigger: {
             trigger: h2Ref.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: -60,
-          duration: 0.9,
+          x: -24,
+          duration: 0.55,
           ease: "power4.out",
         });
 
@@ -43,43 +37,24 @@ const About = () => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 70%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 40,
-          stagger: 0.18,
-          duration: 0.85,
+          y: 20,
+          stagger: 0.12,
+          duration: 0.55,
           ease: "power3.out",
-        });
-
-        paragraphs.forEach((p) => {
-          if (!p) return;
-          const handleMouseEnter = () => {
-            gsap.to(p, { x: 5, duration: 0.3, ease: "power2.out" });
-          };
-          const handleMouseLeave = () => {
-            gsap.to(p, { x: 0, duration: 0.3, ease: "power2.out" });
-          };
-          p.addEventListener("mouseenter", handleMouseEnter);
-          p.addEventListener("mouseleave", handleMouseLeave);
-          listeners.push({ el: p, event: "mouseenter", handler: handleMouseEnter });
-          listeners.push({ el: p, event: "mouseleave", handler: handleMouseLeave });
         });
       }, sectionRef);
 
-      return () => {
-        ctx.revert();
-        listeners.forEach(({ el, event, handler }) =>
-          el.removeEventListener(event, handler),
-        );
-      };
+      return () => ctx.revert();
     });
 
     return () => mm.revert();
   }, []);
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} id="about">
       <Container>
         <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           About Me

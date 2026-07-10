@@ -89,11 +89,11 @@ const Experience = () => {
           scrollTrigger: {
             trigger: h2Ref.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          x: -100,
-          duration: 1,
+          x: -32,
+          duration: 0.6,
           ease: "power3.out",
         });
 
@@ -101,11 +101,11 @@ const Experience = () => {
           scrollTrigger: {
             trigger: pRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 30,
-          duration: 0.8,
+          y: 18,
+          duration: 0.5,
           ease: "power2.out",
         });
 
@@ -118,12 +118,12 @@ const Experience = () => {
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
-              toggleActions: "play none none reverse",
+              toggleActions: "play none none none",
             },
             opacity: 0,
-            y: 60,
-            duration: 0.8,
-            delay: index * 0.15,
+            y: 24,
+            duration: 0.55,
+            delay: index * 0.1,
             ease: "power2.out",
           });
 
@@ -164,7 +164,7 @@ const Experience = () => {
   }, []);
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} id="experience">
       <Container>
         <h2 ref={h2Ref} className="font-display font-bold text-h2 text-white mb-3">
           Experience

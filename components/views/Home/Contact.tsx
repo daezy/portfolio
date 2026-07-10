@@ -25,11 +25,11 @@ const Contact = () => {
           scrollTrigger: {
             trigger: headingRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 50,
-          duration: 1,
+          y: 24,
+          duration: 0.6,
           ease: "power3.out",
         });
 
@@ -37,11 +37,11 @@ const Contact = () => {
           scrollTrigger: {
             trigger: subtitleRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 30,
-          duration: 0.8,
+          y: 18,
+          duration: 0.5,
           ease: "power2.out",
         });
 
@@ -49,11 +49,11 @@ const Contact = () => {
           scrollTrigger: {
             trigger: formRef.current,
             start: "top 80%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 40,
-          duration: 0.9,
+          y: 20,
+          duration: 0.55,
           ease: "power2.out",
         });
 
@@ -61,11 +61,11 @@ const Contact = () => {
           scrollTrigger: {
             trigger: btnRef.current,
             start: "top 90%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 20,
-          duration: 0.7,
+          y: 14,
+          duration: 0.45,
           ease: "power2.out",
         });
 
@@ -73,11 +73,11 @@ const Contact = () => {
           scrollTrigger: {
             trigger: socialsRef.current,
             start: "top 90%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
           opacity: 0,
-          y: 20,
-          duration: 0.7,
+          y: 14,
+          duration: 0.45,
           ease: "power2.out",
         });
       }, sectionRef);
@@ -89,7 +89,7 @@ const Contact = () => {
   }, []);
 
   return (
-    <div ref={sectionRef}>
+    <div ref={sectionRef} id="contact">
       <Container>
         <h2
           ref={headingRef}
@@ -109,6 +109,7 @@ const Contact = () => {
 
         <form
           ref={formRef}
+          id="contact-form"
           className="w-full flex flex-col gap-5 max-w-[960px] mx-auto"
         >
           <div className="flex flex-col sm:flex-row gap-5">
@@ -146,6 +147,7 @@ const Contact = () => {
         <button
           ref={btnRef}
           type="submit"
+          form="contact-form"
           className="mx-auto mt-8 flex items-center gap-2 bg-[#338FFF] hover:bg-[#1C66C2] text-white font-medium px-8 py-3.5 rounded-full transition-colors duration-300 text-base"
         >
           Send Message
