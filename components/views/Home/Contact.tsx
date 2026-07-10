@@ -5,10 +5,20 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FiArrowRight, FiMail } from "react-icons/fi";
 import { FaXTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa6";
+import { useForm, ValidationError } from "@formspree/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Formspree form IDs are public by design — they identify the endpoint, not a secret.
+const FORMSPREE_FORM_ID = "mykqreap";
+
+const fieldClasses =
+  "flex-1 bg-[#1E1E1E] text-[#C5C8D3] placeholder-[#6B7280] rounded-2xl px-6 py-4 text-base outline-none focus:ring-1 focus:ring-[#338FFF] transition";
+
+const errorClasses = "text-[#F87171] text-sm mt-1";
+
 const Contact = () => {
+  const [state, handleSubmit] = useForm(FORMSPREE_FORM_ID);
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -107,52 +117,104 @@ const Contact = () => {
           i&apos;d love to hear what you&apos;re working on.
         </p>
 
-        <form
-          ref={formRef}
-          id="contact-form"
-          className="w-full flex flex-col gap-5 max-w-[960px] mx-auto"
-        >
-          <div className="flex flex-col sm:flex-row gap-5">
-            <label className="flex-1 flex flex-col gap-2 sr-only" htmlFor="contact-name">
-              Full Name
-            </label>
-            <input
-              id="contact-name"
-              type="text"
-              placeholder="Full Name"
-              className="flex-1 bg-[#1E1E1E] text-[#C5C8D3] placeholder-[#6B7280] rounded-2xl px-6 py-4 text-base outline-none focus:ring-1 focus:ring-[#338FFF] transition"
-            />
-            <label className="flex-1 flex flex-col gap-2 sr-only" htmlFor="contact-email">
-              Email Address
-            </label>
-            <input
-              id="contact-email"
-              type="email"
-              placeholder="Email Address"
-              className="flex-1 bg-[#1E1E1E] text-[#C5C8D3] placeholder-[#6B7280] rounded-2xl px-6 py-4 text-base outline-none focus:ring-1 focus:ring-[#338FFF] transition"
-            />
+        {state.succeeded ? (
+          <div
+            role="status"
+            className="w-full max-w-[960px] mx-auto bg-[#1E1E1E] rounded-2xl px-6 py-10 text-center"
+          >
+            <p className="text-white text-lg font-medium mb-2">
+              Thanks for reaching out!
+            </p>
+            <p className="text-[#C5C8D3] text-base">
+              Your message is on its way — I&apos;ll get back to you shortly.
+            </p>
           </div>
+        ) : (
+          <>
+            <form
+              ref={formRef}
+              id="contact-form"
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col gap-5 max-w-[960px] mx-auto"
+            >
+              <div className="flex flex-col sm:flex-row gap-5">
+                <div className="flex-1">
+                  <label className="sr-only" htmlFor="contact-name">
+                    Full Name
+                  </label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                    autoComplete="name"
+                    placeholder="Full Name"
+                    className={`w-full ${fieldClasses}`}
+                  />
+                  <ValidationError
+                    prefix="Name"
+                    field="name"
+                    errors={state.errors}
+                    className={errorClasses}
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="sr-only" htmlFor="contact-email">
+                    Email Address
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    placeholder="Email Address"
+                    className={`w-full ${fieldClasses}`}
+                  />
+                  <ValidationError
+                    prefix="Email"
+                    field="email"
+                    errors={state.errors}
+                    className={errorClasses}
+                  />
+                </div>
+              </div>
 
-          <label className="sr-only" htmlFor="contact-message">
-            Message
-          </label>
-          <textarea
-            id="contact-message"
-            placeholder="Write your message"
-            rows={8}
-            className="w-full bg-[#1E1E1E] text-[#C5C8D3] placeholder-[#6B7280] rounded-2xl px-6 py-4 text-base outline-none focus:ring-1 focus:ring-[#338FFF] transition resize-none"
-          />
-        </form>
+              <div>
+                <label className="sr-only" htmlFor="contact-message">
+                  Message
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  placeholder="Write your message"
+                  rows={8}
+                  className="w-full bg-[#1E1E1E] text-[#C5C8D3] placeholder-[#6B7280] rounded-2xl px-6 py-4 text-base outline-none focus:ring-1 focus:ring-[#338FFF] transition resize-none"
+                />
+                <ValidationError
+                  prefix="Message"
+                  field="message"
+                  errors={state.errors}
+                  className={errorClasses}
+                />
+              </div>
 
-        <button
-          ref={btnRef}
-          type="submit"
-          form="contact-form"
-          className="mx-auto mt-8 flex items-center gap-2 bg-[#338FFF] hover:bg-[#1C66C2] text-white font-medium px-8 py-3.5 rounded-full transition-colors duration-300 text-base"
-        >
-          Send Message
-          <FiArrowRight className="w-4 h-4" aria-hidden="true" />
-        </button>
+              <ValidationError errors={state.errors} className={errorClasses} />
+            </form>
+
+            <button
+              ref={btnRef}
+              type="submit"
+              form="contact-form"
+              disabled={state.submitting}
+              className="mx-auto mt-8 flex items-center gap-2 bg-[#338FFF] hover:bg-[#1C66C2] disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium px-8 py-3.5 rounded-full transition-colors duration-300 text-base"
+            >
+              {state.submitting ? "Sending..." : "Send Message"}
+              <FiArrowRight className="w-4 h-4" aria-hidden="true" />
+            </button>
+          </>
+        )}
 
         <div
           ref={socialsRef}
@@ -163,7 +225,7 @@ const Contact = () => {
           </p>
           <div className="flex items-center gap-6">
             <a
-              href="https://x.com"
+              href="https://x.com/DanielEzet"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Daniel on X (Twitter)"
@@ -172,7 +234,7 @@ const Contact = () => {
               <FaXTwitter className="w-5 h-5" aria-hidden="true" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/daniel-onoriode-ezet-48324a303/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Daniel on LinkedIn"

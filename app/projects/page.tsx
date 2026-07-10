@@ -9,8 +9,8 @@ import { FaXTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 import { projects } from "@/lib/projects";
 
 const socialLinks = [
-  { label: "X (formerly Twitter)", href: "https://x.com", icon: <FaXTwitter size={15} /> },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: <FaLinkedinIn size={15} /> },
+  { label: "X (formerly Twitter)", href: "https://x.com/DanielEzet", icon: <FaXTwitter size={15} /> },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/daniel-onoriode-ezet-48324a303/", icon: <FaLinkedinIn size={15} /> },
   { label: "GitHub", href: "https://github.com/daezy", icon: <FaGithub size={15} /> },
   { label: "Email", href: "mailto:ezetdaniel@gmail.com", icon: <FiMail size={15} /> },
 ];
