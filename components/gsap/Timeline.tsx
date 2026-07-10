@@ -1,7 +1,7 @@
 "use client";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { use } from "react";
+import React from "react";
 
 const Timeline = () => {
   const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1, yoyo: true });
