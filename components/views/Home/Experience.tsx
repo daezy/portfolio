@@ -27,7 +27,6 @@ const experienceData: ExperienceItem[] = [
       "Joined as one of five founding engineers building a Solana privacy wallet ecosystem that replaces address-based ownership with proof-based ownership",
       "Co-designed and implemented the core smart contract logic (Rust/Anchor) and off-chain backend services powering shielded balances, username-based private transfers, and in-wallet swaps",
       "Ship features across the protocol, web dApp, iOS/Android apps, and Chrome extension wallet",
-      "Protocol has processed $83K+ in on-chain volume since launch",
     ],
   },
   {
