@@ -18,44 +18,54 @@ interface ExperienceItem {
 const experienceData: ExperienceItem[] = [
   {
     id: 1,
-    title: "Development Manager & Solana Developer",
-    company: "Alpha Developments",
-    period: "Oct 2023 - Present",
-    location: "Hybrid (On-site / Remote)",
+    title: "Software Engineer",
+    company: "Veilo",
+    companyUrl: "https://veilo.network",
+    period: "Dec 2025 - Present",
+    location: "Remote",
     responsibilities: [
-      "Leading architecture and development of Web3 products including staking protocols, miner systems, and AI-powered DApps",
-      "Designed and deployed Solana smart contracts using Anchor and native Rust",
-      "Worked on EVM-based products, primarily developing and integrating DApp frontends with smart contracts",
-      "Built multi-user trading bots with subscription logic, automated fee systems, and real-time transaction execution",
-      "Architected scalable backend services and implemented CI/CD pipelines with Docker",
-      "Integrated third-party services including Stripe for subscription-based platforms",
-      "Oversaw production deployments and app store compliance processes",
+      "Joined as one of five founding engineers building a Solana privacy wallet ecosystem that replaces address-based ownership with proof-based ownership",
+      "Co-designed and implemented the core smart contract logic (Rust/Anchor) and off-chain backend services powering shielded balances, username-based private transfers, and in-wallet swaps",
+      "Ship features across the protocol, web dApp, iOS/Android apps, and Chrome extension wallet",
+      "Protocol has processed $83K+ in on-chain volume since launch",
     ],
   },
   {
     id: 2,
-    title: "Full-Stack Developer",
-    company: "Freelance",
-    period: "Jul 2021 - Sep 2023",
-    location: "Remote",
+    title: "Lead Software Engineer (Web3)",
+    company: "Alpha Developments",
+    period: "Oct 2023 - Present",
+    location: "Hybrid",
     responsibilities: [
-      "Built full-stack web applications using MongoDB, Express.js, React, and Node.js",
-      "Developed authentication systems, REST APIs, and dashboards",
-      "Designed responsive UI components with TailwindCSS and modern React patterns",
-      "Deployed and maintained applications on cloud infrastructure",
+      "Lead a team of 5 developers across multiple Web3 product lines, owning system architecture, sprint planning, and code reviews",
+      "Engineered a multi-user automated trading bot with real-time trade execution, subscription logic, and fee automation, serving 100+ users",
+      "Launched an XRPL staking dApp that reached $40K in total value locked (TVL)",
+      "Shipped 10+ products: Telegram automation bots, X (Twitter) API integrations, Turbo (a Kick.com-style live-streaming platform), and an AI agent marketplace with 2,500+ registered users",
+      "Developed 5+ EVM dApp frontends and wallet integrations across Base and BSC",
+      "Implemented Docker-based CI/CD pipelines for 3+ backend services and managed production deployments, monitoring, and app store compliance",
     ],
   },
   {
     id: 3,
+    title: "Freelance Web Developer",
+    company: "Freelance",
+    period: "Jul 2021 - Sep 2023",
+    location: "Remote",
+    responsibilities: [
+      "Delivered 5+ production web applications end-to-end for startups and small businesses using the MERN stack",
+      "Designed responsive, component-driven UIs with Tailwind CSS and built 5+ high-conversion landing pages, collaborating directly with founders",
+      "Owned the full project lifecycle, from scoping and architecture through deployment and post-launch support",
+    ],
+  },
+  {
+    id: 4,
     title: "Junior Full-Stack Developer",
     company: "Dives Investments",
     period: "Jan 2021 - Jun 2021",
     location: "Remote",
     responsibilities: [
-      "Developed and maintained the company's investment web platform using the MERN stack",
-      "Built user onboarding, coupons management, investment tracking, and ROI calculation features",
-      "Created internal admin tools for managing users and transactions",
-      "Fixed production issues and supported ongoing feature updates",
+      "Developed user onboarding, coupon management, investment tracking, and ROI calculation modules for a MERN-stack investment platform serving ~500 users",
+      "Created internal admin tools and resolved production incidents, improving platform stability and reducing manual support workload",
     ],
   },
 ];
@@ -64,10 +74,7 @@ const Experience = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const h2Ref = useRef<HTMLHeadingElement>(null);
   const pRef = useRef<HTMLParagraphElement>(null);
-  const card1Ref = useRef<HTMLDivElement>(null);
-  const card2Ref = useRef<HTMLDivElement>(null);
-  const card3Ref = useRef<HTMLDivElement>(null);
-  const cardRefs = [card1Ref, card2Ref, card3Ref];
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [expandedId, setExpandedId] = useState<number | null>(1);
 
   const toggleExpand = (id: number) => {
@@ -109,9 +116,7 @@ const Experience = () => {
           ease: "power2.out",
         });
 
-        const cards = [card1Ref.current, card2Ref.current, card3Ref.current];
-
-        cards.forEach((card, index) => {
+        cardRefs.current.forEach((card, index) => {
           if (!card) return;
 
           gsap.from(card, {
@@ -178,7 +183,9 @@ const Experience = () => {
           {experienceData.map((exp, index) => (
             <div
               key={exp.id}
-              ref={cardRefs[index]}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
               className="bg-[#1a1a1a] rounded-3xl overflow-hidden transition-all duration-300"
             >
               <button
@@ -214,7 +221,7 @@ const Experience = () => {
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   expandedId === exp.id
-                    ? "max-h-[600px] opacity-100"
+                    ? "max-h-[900px] opacity-100"
                     : "max-h-0 opacity-0"
                 }`}
               >
