@@ -1,12 +1,14 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs";
 import { FiMail, FiLink2 } from "react-icons/fi";
+import { FiMaximize2 } from "react-icons/fi";
 import { FaXTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 import { projects, getProject } from "@/lib/projects";
+import Lightbox from "./Lightbox";
 
 const socialLinks = [
   { label: "X (formerly Twitter)", href: "https://x.com/DanielEzet", icon: <FaXTwitter size={15} /> },
@@ -17,6 +19,8 @@ const socialLinks = [
 
 export default function ProjectDetail({ id }: { id: string }) {
   const project = getProject(id);
+
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const headerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -205,9 +209,14 @@ export default function ProjectDetail({ id }: { id: string }) {
           </div>
         </div>
 
-        {/* Gallery */}
+        {/* Gallery — click any image to view it full-size */}
         <div ref={galleryRef} className="mt-10">
-          <div className="gallery-image rounded-[12px] overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setLightboxIndex(0)}
+            aria-label={`View ${project.title} main screenshot full size`}
+            className="gallery-image group relative block w-full rounded-[12px] overflow-hidden cursor-zoom-in"
+          >
             <Image
               src={mainImage}
               alt={`${project.title} — main screenshot`}
@@ -215,10 +224,20 @@ export default function ProjectDetail({ id }: { id: string }) {
               placeholder="blur"
               draggable={false}
             />
-          </div>
+            <span className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors" />
+            <span className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/55 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <FiMaximize2 size={16} />
+            </span>
+          </button>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             {secondaryImages.map((img, i) => (
-              <div key={i} className="gallery-image rounded-[12px] overflow-hidden">
+              <button
+                key={i}
+                type="button"
+                onClick={() => setLightboxIndex(i + 1)}
+                aria-label={`View ${project.title} screenshot ${i + 2} full size`}
+                className="gallery-image group relative block w-full rounded-[12px] overflow-hidden cursor-zoom-in"
+              >
                 <Image
                   src={img}
                   alt={`${project.title} — screenshot ${i + 2}`}
@@ -226,11 +245,25 @@ export default function ProjectDetail({ id }: { id: string }) {
                   placeholder="blur"
                   draggable={false}
                 />
-              </div>
+                <span className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors" />
+                <span className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/55 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <FiMaximize2 size={16} />
+                </span>
+              </button>
             ))}
           </div>
         </div>
       </main>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={project.gallery}
+          index={lightboxIndex}
+          title={project.title}
+          onClose={() => setLightboxIndex(null)}
+          onIndexChange={setLightboxIndex}
+        />
+      )}
 
       {/* Footer */}
       <footer className="border-t border-white/10 py-8 flex flex-col items-center gap-5">
