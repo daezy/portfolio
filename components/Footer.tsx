@@ -17,7 +17,8 @@ const Footer = () => {
 
       {/* Big name */}
       <div className="w-full flex justify-center items-end leading-none mb-6">
-        <h1
+        {/* Decorative wordmark, not a heading — the page's only h1 is in Hero. */}
+        <p
           className="text-black font-bold tracking-tighter text-center w-full translate-y-[2%]"
           style={{
             fontSize: "21.4vw",
@@ -26,7 +27,7 @@ const Footer = () => {
           }}
         >
           Daniel Ezet
-        </h1>
+        </p>
       </div>
     </footer>
   );

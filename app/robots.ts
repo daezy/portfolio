@@ -6,7 +6,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      // Next's internal build assets carry no indexable content.
+      disallow: ["/_next/static/chunks/"],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
   };
 }
