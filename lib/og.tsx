@@ -5,8 +5,12 @@ import type { ReactElement } from "react";
 export const ogSize = { width: 1200, height: 630 };
 export const ogContentType = "image/png";
 
-const BG = "#0A0A0A";
-const SURFACE = "#131415";
+// Deliberately lifted off the site's #0A0A0A. Chat clients (Telegram, Slack,
+// X in dark mode) paint near-black bubbles, and a card that matches them has no
+// visible edge — it reads as a failed image rather than a picture.
+const BG = "#101214";
+const SURFACE = "#1A1D1F";
+const EDGE = "rgba(255,255,255,0.10)";
 const ACCENT = "#338FFF";
 const ACCENT_DEEP = "#1C66C2";
 const TEXT = "#FFFFFF";
@@ -122,6 +126,21 @@ export function OgCard({
         fontFamily: "Inter Tight",
       }}
     >
+      {/* Inset hairline so the card keeps a defined edge on any host background.
+          Drawn as an overlay rather than a border on the root, so it cannot
+          shrink the content box regardless of how satori resolves box-sizing. */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          border: `1px solid ${EDGE}`,
+          display: "flex",
+        }}
+      />
+
       {/* Accent glow, bled off the top-right corner */}
       <div
         style={{
