@@ -20,7 +20,7 @@ const experienceData: ExperienceItem[] = [
     id: 1,
     title: "Software Engineer",
     company: "Veilo",
-    companyUrl: "https://veilo.network",
+    companyUrl: "https://www.veilo.network/",
     period: "Dec 2025 - Present",
     location: "Remote",
     responsibilities: [
@@ -33,6 +33,7 @@ const experienceData: ExperienceItem[] = [
     id: 2,
     title: "Lead Software Engineer (Web3)",
     company: "Alpha Developments",
+    companyUrl: "https://www.alphadevelopments.org/",
     period: "Oct 2023 - Present",
     location: "Hybrid",
     responsibilities: [
@@ -242,6 +243,17 @@ const Experience = () => {
                       </svg>
                       <span>{exp.location}</span>
                     </div>
+                    {exp.companyUrl && (
+                      <a
+                        href={exp.companyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        tabIndex={expandedId === exp.id ? 0 : -1}
+                        className="not-italic text-[#4A9EFF] hover:text-white transition-colors"
+                      >
+                        {new URL(exp.companyUrl).hostname.replace(/^www\./, "")} ↗
+                      </a>
+                    )}
                   </div>
 
                   <ul className="space-y-3">
