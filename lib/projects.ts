@@ -234,6 +234,35 @@ export const projects: Project[] = [
   },
 ];
 
+// Further Alpha Developments work, grouped rather than given case studies so
+// the curated list above stays short. Rendered as a compact block on /projects.
+export const alphaDevelopmentsWork: {
+  category: string;
+  items: { name: string; url: string }[];
+}[] = [
+  {
+    category: "Token launchpads",
+    items: [
+      { name: "Raypad", url: "https://raypad.fun/" },
+      { name: "Orbit", url: "https://www.orbits.fun/" },
+      { name: "Jup Pad", url: "https://www.juppad.fun/" },
+      { name: "Drip Stock", url: "https://dripstock.fun/" },
+      { name: "Fomo Curve", url: "https://www.fomocurve.family/" },
+    ],
+  },
+  {
+    category: "Trading & wallet tools",
+    items: [
+      { name: "SuiStrike", url: "https://suistrike.io/" },
+      { name: "Drainproof", url: "https://drainproof.vercel.app/" },
+    ],
+  },
+  {
+    category: "On-chain games",
+    items: [{ name: "Coal", url: "https://www.minecoal.fun/" }],
+  },
+];
+
 export function getProject(id: string): Project | undefined {
   return projects.find((p) => p.id === id);
 }

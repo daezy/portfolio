@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 import { BsCaretRight } from "react-icons/bs";
 import { FiMail } from "react-icons/fi";
 import { FaXTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa6";
-import { projects } from "@/lib/projects";
+import { projects, alphaDevelopmentsWork } from "@/lib/projects";
 
 const socialLinks = [
   { label: "X (formerly Twitter)", href: "https://x.com/DanielEzet", icon: <FaXTwitter size={15} /> },
@@ -182,6 +182,47 @@ export default function ProjectsPage() {
             </div>
           ))}
         </div>
+
+        <section className="mt-16 md:mt-20 bg-[#131415] rounded-[24px] p-6 md:p-8">
+          <h2 className="font-[family-name:var(--font-bricolage)] font-bold text-white text-[1.5rem] mb-3">
+            More from Alpha Developments
+          </h2>
+          <p className="max-w-[65ch] text-[#C5C8D3] text-[0.9375rem] leading-7 mb-6">
+            Beyond the projects above, I&apos;ve worked on most of{" "}
+            <a
+              href="https://www.alphadevelopments.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#4A9EFF] hover:text-white transition-colors"
+            >
+              Alpha Developments&apos;
+            </a>{" "}
+            product line, including token launchpads, trading bots, wallet security tools, and
+            on-chain games across Solana and Sui.
+          </p>
+          <dl className="flex flex-col gap-3 text-[0.9375rem] leading-7">
+            {alphaDevelopmentsWork.map((group) => (
+              <div key={group.category} className="flex flex-col sm:flex-row sm:gap-4">
+                <dt className="text-white font-medium sm:w-[200px] shrink-0">{group.category}</dt>
+                <dd>
+                  {group.items.map((item, i) => (
+                    <React.Fragment key={item.name}>
+                      {i > 0 && <span aria-hidden="true">, </span>}
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#C5C8D3] underline decoration-white/20 underline-offset-4 hover:text-white hover:decoration-white transition-colors"
+                      >
+                        {item.name}
+                      </a>
+                    </React.Fragment>
+                  ))}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </main>
 
       {/* Footer */}
